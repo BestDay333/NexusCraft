@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Project Dashboard - GitHub Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sync-card {
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .sync-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .collapsible-card .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .collapsible-card .collapsible-header:hover {
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .collapsible-card.collapsed .collapsible-content {
+            display: none;
+        }
+        .collapsible-card.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+        .collapse-icon {
+            transition: transform 0.2s ease;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .section-badge.success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+        .empty-placeholder {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            display: none;
+        }
+        .empty-placeholder i {
+            font-size: 28px;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+        .empty-placeholder p {
+            font-size: 13px;
+        }
+        .btn-edit-val {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 6px 10px;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .btn-edit-val:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        .btn-edit-val i {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .modal-info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .modal-info-block span {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            width: max-content;
+            max-width: 100%;
+        }
+        .history-cell {
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .history-text {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .history-text.muted {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: #1e1e24;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+        .toast.success {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .toast.success i {
+            color: var(--success);
+        }
+        .toast.error {
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+        .toast.error i {
+            color: #ef4444;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="app-container">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="header-content">
+                <div class="badge-tag"><i class="fa-brands fa-github"></i> GitHub Edition</div>
+                <h1>Проспектум — Дашборд проекта</h1>
+                <p class="subtitle">Синхронизация данных через data.json</p>
+            </div>
+            
+            <div class="header-right">
+                <div class="auth-container" id="authContainer">
+                    <button class="btn-auth" id="loginBtn" onclick="openLoginModal()">
+                        <i class="fa-brands fa-discord"></i> Войти
+                    </button>
+                    <div class="user-profile" id="userProfile" style="display: none;">
+                        <img src="" alt="Avatar" id="userAvatar" class="user-avatar">
+                        <span id="userName">Username</span>
+                        <button class="btn-logout" onclick="logout()" title="Выйти"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+            <div class="column-right">
+                
+                <!-- Панель управления -->
+                <div class="card sync-card">
+                    <div class="sync-header">
+                        <div class="card-title">
+                            <i class="fa-brands fa-github" style="color: var(--text);"></i>
+                            <h3>Источник: Gist data.json (авто-обновление каждые 30с)</h3>
+                        </div>
+                        <div>
+                            <button class="btn primary" onclick="loadGitHubData(false)">
+                                <i class="fa-solid fa-rotate"></i> Обновить сейчас
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Секция 1: Требуемые ресурсы -->
+                <div class="card collapsible-card" id="activeCard">
+                    <div class="card-header collapsible-header" onclick="toggleCard('activeCard')">
+                        <div class="card-title">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                            <h3>Требуемые ресурсы</h3>
+                            <span class="section-badge" id="activeCount">0</span>
+                        </div>
+                        <div class="header-actions">
+                            <div class="filter-buttons" onclick="event.stopPropagation()">
+                                <button class="filter-btn active" data-filter="all">Все</button>
+                                <button class="filter-btn" data-filter="not-started">Не начато</button>
+                                <button class="filter-btn" data-filter="in-progress">В процессе</button>
+                            </div>
+                            <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="collapsible-content">
+                        <div class="table-controls">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="searchInputActive" placeholder="Поиск материала..." oninput="filterTables()">
+                            </div>
+
+                            <div class="custom-select" id="customSelectActive">
+                                <div class="select-trigger" onclick="toggleSelectDropdown(event, 'customSelectActive')">
+                                    <div class="trigger-content">
+                                        <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                        <span id="selectedOptionTextActive">Сортировка по умолчанию</span>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down arrow"></i>
+                                </div>
+                                <div class="select-dropdown">
+                                    <div class="select-option active" data-value="default" onclick="selectOption(this)">Сортировка по умолчанию</div>
+                                    <div class="select-option" data-value="rem-asc" onclick="selectOption(this)">Осталось: от меньшего к большему</div>
+                                    <div class="select-option" data-value="rem-desc" onclick="selectOption(this)">Осталось: от большего к меньшему</div>
+                                    <div class="select-option" data-value="req-desc" onclick="selectOption(this)">Требуется: сначала масштабные</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table id="activeTable">
+                                <thead>
+                                    <tr>
+                                        <th onclick="sortTable('activeTable', 0)" class="sortable">Материал <i class="fa-solid fa-sort"></i></th>
+                                        <th onclick="sortTable('activeTable', 1, true)" class="sortable">Требуется <i class="fa-solid fa-sort"></i></th>
+                                        <th onclick="sortTable('activeTable', 2, true)" class="sortable">Добыто <i class="fa-solid fa-sort"></i></th>
+                                        <th onclick="sortTable('activeTable', 3, true)" class="sortable">Осталось <i class="fa-solid fa-sort"></i></th>
+                                        <th>Прогресс</th>
+                                        <th>Статус</th>
+                                        <th>История смен</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activeTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Секция 2: Собранные ресурсы -->
+                <div class="card collapsible-card collapsed" id="completedCard">
+                    <div class="card-header collapsible-header" onclick="toggleCard('completedCard')">
+                        <div class="card-title">
+                            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i>
+                            <h3>Собранные ресурсы</h3>
+                            <span class="section-badge success" id="completedCount">0</span>
+                        </div>
+                        <div class="header-actions">
+                            <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="collapsible-content">
+                        <div class="table-container">
+                            <table id="completedTable">
+                                <thead>
+                                    <tr>
+                                        <th>Материал</th>
+                                        <th>Требуется</th>
+                                        <th>Добыто</th>
+                                        <th>Осталось</th>
+                                        <th>Прогресс</th>
+                                        <th>Статус</th>
+                                        <th>История смен</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="completedTableBody"></tbody>
+                            </table>
+                            <div class="empty-placeholder" id="completedEmpty">
+                                <i class="fa-solid fa-box-open"></i>
+                                <p>Пока нет полностью собранных ресурсов</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalItemTitle">Изменение добычи</h3>
+                <button class="close-modal" onclick="closeEditModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-info-block">
+                <div>Требуется: <span id="modalRequiredText">0</span></div>
+                <div>Осталось: <span id="modalRemainingText">0</span></div>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="modalValueInput" placeholder="Например: 2 шалкера или 32*64..." oninput="calcModalRemaining()" onkeydown="if(event.key==='Enter') saveObtainedLocally()">
+                <button class="btn primary full" onclick="saveObtainedLocally()" style="margin-top: 12px;">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Авторизация</h3>
+                <button class="close-modal" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="modal-subtitle">Введите ваш ник для доступа к изменениям</p>
+            <div class="modal-body">
+                <input type="text" id="usernameInput" placeholder="Ваш ник..." onkeydown="if(event.key==='Enter') login()">
+                <button class="btn primary full" onclick="login()" style="margin-top: 12px;">Войти в систему</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Прямая ссылка на твой Gist с data.json
+        const DATA_URL = "https://gist.githubusercontent.com/BestDay333/b98951e791a40632886fc26d1ab18631/raw/15d3e4d61ceb3b49d910138e16e204297c5704e4/data.json";
+
+        let materialsData = [];
+        let savedObtained = JSON.parse(localStorage.getItem('dashboard_obtained')) || {};
+        let itemHistory = JSON.parse(localStorage.getItem('dashboard_history')) || {};
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function parseObtainedValue(input) {
+            if (typeof input === 'number') return input;
+            if (!input) return 0;
+            let s = String(input).toLowerCase().trim();
+            let total = 0;
+
+            const shulkerRegex = /(\d+(?:[\.,]\d+)?)\s*(?:шалкер[а-я]*|shulker[s]*)/g;
+            let match;
+            while ((match = shulkerRegex.exec(s)) !== null) {
+                total += parseFloat(match[1].replace(',', '.')) * 1728;
+            }
+            s = s.replace(/[\d\.,]+\s*(?:шалкер[а-я]*|shulker[s]*)/g, '');
+
+            const stackRegex = /(\d+(?:[\.,]\d+)?)\s*(?:стак[а-я]*)/g;
+            while ((match = stackRegex.exec(s)) !== null) {
+                total += parseFloat(match[1].replace(',', '.')) * 64;
+            }
+            s = s.replace(/[\d\.,]+\s*(?:стак[а-я]*)/g, '');
+
+            let cleanExpr = s
+                .replace(/предмет[а-я]*/g, '')
+                .replace(/шт\.?/g, '')
+                .replace(/штук[а-я]*/g, '')
+                .replace(',', '.')
+                .replace(/[^0-9+\-*/().\s]/g, '');
+
+            try {
+                if (cleanExpr.trim()) {
+                    const res = Function(`'use strict'; return (${cleanExpr})`)();
+                    if (!isNaN(res)) total += res;
+                }
+            } catch (e) {
+                const nums = cleanExpr.match(/\d+(?:\.\d+)?/g);
+                if (nums) nums.forEach(n => total += parseFloat(n));
+            }
+            return Math.round(total);
+        }
+
+        function checkAuth() {
+            const savedUser = localStorage.getItem('dashboard_user');
+            if (savedUser) showUser(savedUser);
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('open');
+            document.getElementById('usernameInput').focus();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('open');
+        }
+
+        function login() {
+            const input = document.getElementById('usernameInput');
+            const username = input.value.trim();
+            if (!username) return;
+            localStorage.setItem('dashboard_user', username);
+            showUser(username);
+            closeLoginModal();
+            input.value = '';
+            showToast(`Добро пожаловать, ${username}!`);
+        }
+
+        function logout() {
+            localStorage.removeItem('dashboard_user');
+            document.getElementById('userProfile').style.display = 'none';
+            document.getElementById('loginBtn').style.display = 'inline-flex';
+            showToast('Вы вышли из системы');
+        }
+
+        function showUser(username) {
+            document.getElementById('loginBtn').style.display = 'none';
+            const profile = document.getElementById('userProfile');
+            profile.style.display = 'flex';
+            document.getElementById('userName').textContent = username;
+            document.getElementById('userAvatar').src = `https://api.dicebear.com/7.x/identicon/svg?seed=${username}`;
+        }
+
+        // Загрузка данных из Gist с защитой от кеширования
+        async function loadGitHubData(isBackground = false) {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                if (!response.ok) throw new Error('Не удалось загрузить data.json');
+                const data = await response.json();
+                
+                materialsData = data.map(item => ({
+                    name: item.name,
+                    required: item.required || 0,
+                    obtained: item.obtained || 0
+                }));
+
+                localStorage.setItem('dashboard_cached_materials', JSON.stringify(materialsData));
+                renderTables();
+                
+                if (!isBackground) {
+                    showToast('Данные успешно обновлены из Gist!');
+                }
+            } catch (err) {
+                if (!isBackground) {
+                    showToast('Не удалось загрузить data.json', 'error');
+                }
+                console.error(err);
+            }
+        }
+
+        function renderTables() {
+            const activeTbody = document.getElementById('activeTableBody');
+            const completedTbody = document.getElementById('completedTableBody');
+            activeTbody.innerHTML = '';
+            completedTbody.innerHTML = '';
+
+            materialsData.forEach((item, index) => {
+                const itemName = item.name;
+                const required = item.required || 0;
+                
+                let rawObd = savedObtained[itemName] !== undefined ? savedObtained[itemName] : item.obtained;
+                let obtained = parseObtainedValue(rawObd);
+
+                item.obtained = obtained;
+
+                const remaining = Math.max(0, required - obtained);
+                const percent = required > 0 ? Math.min(100, (obtained / required) * 100) : 0;
+                
+                let status = 'not-started';
+                let statusText = 'Не начато';
+                if (percent === 100) {
+                    status = 'closed';
+                    statusText = 'Закрыто';
+                } else if (percent > 0) {
+                    status = 'in-progress';
+                    statusText = 'В процессе';
+                }
+
+                const historyInfo = itemHistory[itemName] || { user: 'Gist', text: 'Синхронизация' };
+
+                const tr = document.createElement('tr');
+                tr.setAttribute('data-status', status);
+                tr.setAttribute('data-id', index);
+                tr.setAttribute('data-name', itemName);
+
+                tr.innerHTML = `
+                    <td><div class="item-cell"><span>${itemName}</span></div></td>
+                    <td class="req-val" data-value="${required}">${required.toLocaleString()}</td>
+                    <td>
+                        <button class="btn-edit-val" onclick="openEditModal(this)">
+                            <span class="obtained-text" data-raw="${rawObd}">${obtained.toLocaleString()}</span>
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </td>
+                    <td class="highlight-rem" data-value="${remaining}">${remaining.toLocaleString()}</td>
+                    <td>
+                        <div class="mini-prog">
+                            <div class="bar ${percent === 100 ? 'complete' : ''}" style="width: ${percent}%;"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge ${status}">${statusText}</span>
+                    </td>
+                    <td>
+                        <div class="history-cell">
+                            <span class="history-text ${historyInfo.user === 'Gist' ? 'muted' : ''}">${historyInfo.user}: ${historyInfo.text}</span>
+                        </div>
+                    </td>
+                `;
+
+                if (status === 'closed') {
+                    completedTbody.appendChild(tr);
+                } else {
+                    activeTbody.appendChild(tr);
+                }
+            });
+
+            updateCounters();
+            checkEmptyStates();
+            filterTables();
+        }
+
+        function toggleCard(cardId) {
+            document.getElementById(cardId).classList.toggle('collapsed');
+        }
+
+        let activeRow = null;
+
+        function openEditModal(buttonEl) {
+            const currentUser = localStorage.getItem('dashboard_user');
+            if (!currentUser) {
+                showToast('Войдите в систему, чтобы изменять ресурсы!', 'error');
+                openLoginModal();
+                return;
+            }
+
+            activeRow = buttonEl.closest('tr');
+            const itemName = activeRow.getAttribute('data-name');
+            const requiredVal = activeRow.querySelector('.req-val').getAttribute('data-value');
+            const rawObd = activeRow.querySelector('.obtained-text').getAttribute('data-raw');
+
+            document.getElementById('modalItemTitle').textContent = itemName;
+            document.getElementById('modalRequiredText').textContent = Number(requiredVal).toLocaleString();
+            
+            const input = document.getElementById('modalValueInput');
+            input.value = rawObd !== undefined && rawObd !== null ? rawObd : '';
+            calcModalRemaining();
+
+            document.getElementById('editModal').classList.add('open');
+            input.focus();
+            input.select();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('open');
+            activeRow = null;
+        }
+
+        function calcModalRemaining() {
+            if (!activeRow) return;
+            const required = parseFloat(activeRow.querySelector('.req-val').getAttribute('data-value')) || 0;
+            const input = document.getElementById('modalValueInput');
+            let obtained = parseObtainedValue(input.value);
+
+            if (obtained < 0) obtained = 0;
+            if (obtained > required) obtained = required;
+
+            const remaining = required - obtained;
+            document.getElementById('modalRemainingText').textContent = remaining.toLocaleString();
+        }
+
+        function saveObtainedLocally() {
+            if (!activeRow) return;
+            const currentUser = localStorage.getItem('dashboard_user');
+            const itemName = activeRow.getAttribute('data-name');
+
+            const input = document.getElementById('modalValueInput');
+            const rawVal = input.value;
+            const required = parseFloat(activeRow.querySelector('.req-val').getAttribute('data-value')) || 0;
+            let obtained = parseObtainedValue(rawVal);
+
+            if (obtained < 0) obtained = 0;
+            if (obtained > required) obtained = required;
+
+            savedObtained[itemName] = obtained;
+            localStorage.setItem('dashboard_obtained', JSON.stringify(savedObtained));
+
+            const historyTextStr = `${rawVal} шт.`;
+            itemHistory[itemName] = { user: currentUser, text: historyTextStr };
+            localStorage.setItem('dashboard_history', JSON.stringify(itemHistory));
+
+            closeEditModal();
+            renderTables();
+            showToast('Значение сохранено!');
+        }
+
+        document.getElementById('editModal').addEventListener('click', (e) => {
+            if (e.target.id === 'editModal') closeEditModal();
+        });
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target.id === 'loginModal') closeLoginModal();
+        });
+
+        function toggleSelectDropdown(e, selectId) {
+            e.stopPropagation();
+            document.getElementById(selectId).classList.toggle('open');
+        }
+
+        window.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select').forEach(sel => sel.classList.remove('open'));
+        });
+
+        function selectOption(optionEl) {
+            const value = optionEl.getAttribute('data-value');
+            const text = optionEl.textContent;
+            document.getElementById('selectedOptionTextActive').textContent = text;
+            
+            document.querySelectorAll('#customSelectActive .select-option').forEach(opt => opt.classList.remove('active'));
+            optionEl.classList.add('active');
+            document.getElementById('customSelectActive').classList.remove('open');
+            
+            applyAdvancedSort('activeTable', value);
+        }
+
+        function applyAdvancedSort(tableId, val) {
+            const tbody = document.getElementById(tableId + 'Body');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                if (val === 'rem-asc') {
+                    return parseFloat(a.children[3].getAttribute('data-value')) - parseFloat(b.children[3].getAttribute('data-value'));
+                } else if (val === 'rem-desc') {
+                    return parseFloat(b.children[3].getAttribute('data-value')) - parseFloat(a.children[3].getAttribute('data-value'));
+                } else if (val === 'req-desc') {
+                    return parseFloat(b.children[1].getAttribute('data-value')) - parseFloat(a.children[1].getAttribute('data-value'));
+                }
+                return 0;
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        let sortDirections = {};
+        function sortTable(tableId, columnIndex, isNumeric = false) {
+            const tbody = document.getElementById(tableId + 'Body');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            let key = tableId + '-' + columnIndex;
+            let dir = sortDirections[key] === 'asc' ? 'desc' : 'asc';
+            sortDirections[key] = dir;
+
+            rows.sort((rowA, rowB) => {
+                let cellA = rowA.children[columnIndex].getAttribute('data-value') || rowA.children[columnIndex].textContent.trim();
+                let cellB = rowB.children[columnIndex].getAttribute('data-value') || rowB.children[columnIndex].textContent.trim();
+
+                if (isNumeric) {
+                    return dir === 'asc' ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+                } else {
+                    return dir === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+                }
+            });
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                filterTables();
+            });
+        });
+
+        function filterTables() {
+            const query = document.getElementById('searchInputActive').value.toLowerCase();
+            const rows = document.querySelectorAll('#activeTableBody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const status = row.getAttribute('data-status');
+                const matchesSearch = text.includes(query);
+                const matchesFilter = (currentFilter === 'all') || (status === currentFilter);
+
+                if (matchesSearch && matchesFilter) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function updateCounters() {
+            const activeCount = document.querySelectorAll('#activeTableBody tr').length;
+            const completedCount = document.querySelectorAll('#completedTableBody tr').length;
+            document.getElementById('activeCount').textContent = activeCount;
+            document.getElementById('completedCount').textContent = completedCount;
+        }
+
+        function checkEmptyStates() {
+            const completedRows = document.querySelectorAll('#completedTableBody tr').length;
+            const emptyEl = document.getElementById('completedEmpty');
+            const tableEl = document.getElementById('completedTable');
+            
+            if (completedRows === 0) {
+                emptyEl.style.display = 'block';
+                tableEl.style.display = 'none';
+            } else {
+                emptyEl.style.display = 'none';
+                tableEl.style.display = 'table';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadGitHubData(false);
+
+            // Автоматическое фоновое обновление данных каждые 30 секунд
+            setInterval(() => {
+                loadGitHubData(true);
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
