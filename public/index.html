@@ -7,18 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .sync-card {
-            padding: 16px 20px;
-            margin-bottom: 20px;
-        }
-        .sync-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
         .collapsible-card .collapsible-header {
             cursor: pointer;
             user-select: none;
@@ -175,6 +163,274 @@
             from { transform: translateY(100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+
+        .item-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .btn-sync-header {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .btn-sync-header:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text);
+            border-color: var(--accent);
+        }
+
+        .category-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .category-filters-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .cat-filter-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .cat-filter-wrapper:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.03);
+        }
+        .cat-filter-wrapper.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .cat-filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 10px 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        .cat-filter-wrapper.active .cat-filter-btn {
+            color: white;
+        }
+        .cat-filter-btn:hover {
+            color: var(--text);
+        }
+        .cat-filter-wrapper.active .cat-filter-btn:hover {
+            color: white;
+        }
+        .cat-edit-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 8px;
+            cursor: pointer;
+            font-size: 11px;
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            transition: color 0.2s;
+        }
+        .cat-edit-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .cat-filter-wrapper.active .cat-edit-btn {
+            color: rgba(255, 255, 255, 0.8);
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+        .cat-filter-wrapper.active .cat-edit-btn:hover {
+            color: white;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-add-category {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-add-category:hover {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: #10b981;
+        }
+
+        #categoryModal .modal-card {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .modal-controls-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .modal-search-box {
+            position: relative;
+            flex: 1;
+        }
+        .modal-search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        .modal-search-box input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 8px 12px 8px 34px;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 13px;
+            transition: border-color 0.2s;
+        }
+        .modal-search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .materials-checklist {
+            max-height: 280px;
+            overflow-y: auto;
+            background: rgba(15, 15, 18, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .materials-checklist::-webkit-scrollbar {
+            width: 6px;
+        }
+        .materials-checklist::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .material-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text);
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: background 0.15s;
+            user-select: none;
+            border: 1px solid transparent;
+        }
+        .material-checkbox-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--card-border);
+        }
+        .material-checkbox-item.checked {
+            background: rgba(99, 102, 241, 0.06);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+        .material-checkbox-item input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .material-checkbox-item input[type="checkbox"]:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .material-checkbox-item input[type="checkbox"]:checked::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 10px;
+            color: white;
+        }
+
+        .modal-actions-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .search-box input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 9px 12px 9px 36px;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 13px;
+            transition: border-color 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -189,6 +445,9 @@
             </div>
             
             <div class="header-right">
+                <button class="btn-sync-header" onclick="loadGitHubData(false)" title="Синхронизировать с Gist (Авто каждые 30с)">
+                    <i class="fa-solid fa-rotate"></i> <span>Gist sync</span>
+                </button>
                 <div class="auth-container" id="authContainer">
                     <button class="btn-auth" id="loginBtn" onclick="openLoginModal()">
                         <i class="fa-brands fa-discord"></i> Войти
@@ -205,21 +464,6 @@
         <!-- Основной контент -->
         <div class="dashboard-grid" style="grid-template-columns: 1fr;">
             <div class="column-right">
-                
-                <!-- Панель управления -->
-                <div class="card sync-card">
-                    <div class="sync-header">
-                        <div class="card-title">
-                            <i class="fa-brands fa-github" style="color: var(--text);"></i>
-                            <h3>Источник: Gist data.json (авто-обновление каждые 30с)</h3>
-                        </div>
-                        <div>
-                            <button class="btn primary" onclick="loadGitHubData(false)">
-                                <i class="fa-solid fa-rotate"></i> Обновить сейчас
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Секция 1: Требуемые ресурсы -->
                 <div class="card collapsible-card" id="activeCard">
@@ -239,7 +483,16 @@
                         </div>
                     </div>
 
-                    <div class="collapsible-content">
+                    <div class="collapsible-content" style="padding-top: 15px;">
+                        
+                        <!-- Панель категорий и кнопка добавления -->
+                        <div class="category-toolbar">
+                            <div id="categoryFiltersWrapper" class="category-filters-container"></div>
+                            <button class="btn-add-category" onclick="openCategoryModal()">
+                                <i class="fa-solid fa-plus"></i> Новая категория
+                            </button>
+                        </div>
+
                         <div class="table-controls">
                             <div class="search-box">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -323,7 +576,7 @@
         </div>
     </div>
 
-    <!-- Модальное окно редактирования -->
+    <!-- Модальное окно редактирования добычи -->
     <div class="modal-overlay" id="editModal">
         <div class="modal-card">
             <div class="modal-header">
@@ -337,6 +590,52 @@
             <div class="modal-body">
                 <input type="text" id="modalValueInput" placeholder="Например: 2 шалкера или 32*64..." oninput="calcModalRemaining()" onkeydown="if(event.key==='Enter') saveObtainedLocally()">
                 <button class="btn primary full" onclick="saveObtainedLocally()" style="margin-top: 12px;">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания/редактирования категории -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="categoryModalTitle">Новая категория</h3>
+                <button class="close-modal" onclick="closeCategoryModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="modal-subtitle" id="categoryModalSubtitle">Введите название и выберите материалы для добавления</p>
+            <div class="modal-body">
+                <input type="text" id="newCategoryInput" placeholder="Название категории..." style="margin-bottom: 12px;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Состав материалов:</label>
+                </div>
+
+                <div class="modal-controls-row">
+                    <div class="modal-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="modalMaterialSearch" placeholder="Поиск по материалам..." oninput="renderMaterialsChecklist()">
+                    </div>
+                    
+                    <div class="custom-select" id="customSelectModal" style="width: 190px;">
+                        <div class="select-trigger" onclick="toggleSelectDropdown(event, 'customSelectModal')">
+                            <div class="trigger-content">
+                                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                <span id="selectedOptionTextModal">По алфавиту</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
+                        </div>
+                        <div class="select-dropdown">
+                            <div class="select-option active" data-value="alpha" onclick="selectModalSortOption(this)">По алфавиту</div>
+                            <div class="select-option" data-value="checked-first" onclick="selectModalSortOption(this)">Сначала выбранные</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materials-checklist" id="materialsChecklist"></div>
+
+                <div class="modal-actions-row">
+                    <button class="btn primary" id="categorySubmitBtn" onclick="saveCategory()" style="flex: 1;">Создать категорию</button>
+                    <button class="btn" id="categoryDeleteBtn" onclick="deleteCurrentCategory()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; display: none;"><i class="fa-solid fa-trash"></i> Удалить</button>
+                </div>
             </div>
         </div>
     </div>
@@ -359,12 +658,269 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // Прямая ссылка на твой Gist с data.json
         const DATA_URL = "https://gist.githubusercontent.com/BestDay333/b98951e791a40632886fc26d1ab18631/raw/15d3e4d61ceb3b49d910138e16e204297c5704e4/data.json";
 
         let materialsData = [];
         let savedObtained = JSON.parse(localStorage.getItem('dashboard_obtained')) || {};
         let itemHistory = JSON.parse(localStorage.getItem('dashboard_history')) || {};
+
+        let categories = JSON.parse(localStorage.getItem('project_categories')) || [
+            { id: 'wool', name: 'Шерсть и ковры' },
+            { id: 'clay', name: 'Керамика и терракота' },
+            { id: 'wood', name: 'Дерево' },
+            { id: 'stone', name: 'Камень и блоки' },
+            { id: 'other', name: 'Прочее' }
+        ];
+
+        function saveCategories() {
+            localStorage.setItem('project_categories', JSON.stringify(categories));
+        }
+
+        function getMaterialCategoriesMap() {
+            return JSON.parse(localStorage.getItem('material_categories_map')) || {};
+        }
+
+        function saveMaterialCategoryMap(map) {
+            localStorage.setItem('material_categories_map', JSON.stringify(map));
+        }
+
+        function autoAssignCategories(items) {
+            let materialMap = getMaterialCategoriesMap();
+            let updated = false;
+
+            items.forEach(item => {
+                if (!materialMap[item.name]) {
+                    const name = item.name.toLowerCase();
+                    let assignedId = 'other';
+
+                    if (name.includes('шерсть') || name.includes('ковёр') || name.includes('ковер')) {
+                        assignedId = 'wool';
+                    } else if (name.includes('керамик') || name.includes('терракот')) {
+                        assignedId = 'clay';
+                    } else if (name.includes('древ') || name.includes('дуб') || name.includes('брус') || name.includes('бревно') || name.includes('доск') || name.includes('ель') || name.includes('берез') || name.includes('тропич') || name.includes('акац') || name.includes('мангр') || name.includes('багрян') || name.includes('вишн') || name.includes('бамбук') || name.includes('крим') || name.includes('дерев')) {
+                        assignedId = 'wood';
+                    } else if (name.includes('камен') || name.includes('кирпич') || name.includes('блок') || name.includes('бетон') || name.includes('песчаник') || name.includes('кварц') || name.includes('сланец') || name.includes('диорит') || name.includes('гранит') || name.includes('андезит') || name.includes('туф')) {
+                        assignedId = 'stone';
+                    }
+
+                    materialMap[item.name] = assignedId;
+                    updated = true;
+                }
+            });
+
+            if (updated) {
+                saveMaterialCategoryMap(materialMap);
+            }
+        }
+
+        function initCategoriesUI() {
+            renderCategoryFilterButtons();
+        }
+
+        function renderCategoryFilterButtons() {
+            const wrapper = document.getElementById('categoryFiltersWrapper');
+            if (!wrapper) return;
+
+            wrapper.innerHTML = '';
+
+            const allWrapper = document.createElement('div');
+            allWrapper.className = `cat-filter-wrapper ${currentCatFilter === 'all' ? 'active' : ''}`;
+            allWrapper.innerHTML = `<button class="cat-filter-btn" onclick="filterTableByCategory('all')">Все</button>`;
+            wrapper.appendChild(allWrapper);
+
+            categories.forEach(cat => {
+                const isSelected = currentCatFilter === cat.id;
+                const catWrapper = document.createElement('div');
+                catWrapper.className = `cat-filter-wrapper ${isSelected ? 'active' : ''}`;
+                catWrapper.innerHTML = `
+                    <button class="cat-filter-btn" onclick="filterTableByCategory('${cat.id}')">${cat.name}</button>
+                    <button class="cat-edit-btn" onclick="openEditCategoryModal('${cat.id}')" title="Редактировать категорию"><i class="fa-solid fa-pen"></i></button>
+                `;
+                wrapper.appendChild(catWrapper);
+            });
+        }
+
+        let editingCategoryId = null;
+        let modalSortMode = 'alpha';
+
+        function openCategoryModal() {
+            editingCategoryId = null;
+            modalSortMode = 'alpha';
+            document.getElementById('selectedOptionTextModal').textContent = 'По алфавиту';
+            document.getElementById('categoryModalTitle').textContent = 'Новая категория';
+            document.getElementById('categoryModalSubtitle').textContent = 'Введите название и выберите материалы для добавления';
+            document.getElementById('categorySubmitBtn').textContent = 'Создать категорию';
+            document.getElementById('categoryDeleteBtn').style.display = 'none';
+            document.getElementById('newCategoryInput').value = '';
+            document.getElementById('modalMaterialSearch').value = '';
+
+            renderMaterialsChecklist();
+            document.getElementById('categoryModal').classList.add('open');
+            document.getElementById('newCategoryInput').focus();
+        }
+
+        function openEditCategoryModal(catId) {
+            const cat = categories.find(c => c.id === catId);
+            if (!cat) return;
+
+            editingCategoryId = catId;
+            modalSortMode = 'checked-first';
+            document.getElementById('selectedOptionTextModal').textContent = 'Сначала выбранные';
+            document.getElementById('categoryModalTitle').textContent = 'Редактировать категорию';
+            document.getElementById('categoryModalSubtitle').textContent = 'Измените название или состав материалов';
+            document.getElementById('categorySubmitBtn').textContent = 'Сохранить';
+            document.getElementById('categoryDeleteBtn').style.display = 'inline-flex';
+            document.getElementById('newCategoryInput').value = cat.name;
+            document.getElementById('modalMaterialSearch').value = '';
+
+            renderMaterialsChecklist();
+            document.getElementById('categoryModal').classList.add('open');
+            document.getElementById('newCategoryInput').focus();
+        }
+
+        function selectModalSortOption(optionEl) {
+            modalSortMode = optionEl.getAttribute('data-value');
+            document.getElementById('selectedOptionTextModal').textContent = optionEl.textContent;
+            document.querySelectorAll('#customSelectModal .select-option').forEach(opt => opt.classList.remove('active'));
+            optionEl.classList.add('active');
+            document.getElementById('customSelectModal').classList.remove('open');
+            renderMaterialsChecklist();
+        }
+
+        function renderMaterialsChecklist() {
+            const checklistContainer = document.getElementById('materialsChecklist');
+            const query = document.getElementById('modalMaterialSearch').value.toLowerCase().trim();
+            const materialMap = getMaterialCategoriesMap();
+
+            let items = [...materialsData];
+
+            if (query) {
+                items = items.filter(item => item.name.toLowerCase().includes(query));
+            }
+
+            items.sort((a, b) => {
+                const isAChecked = editingCategoryId ? (materialMap[a.name] === editingCategoryId) : false;
+                const isBChecked = editingCategoryId ? (materialMap[b.name] === editingCategoryId) : false;
+
+                if (modalSortMode === 'checked-first') {
+                    if (isAChecked && !isBChecked) return -1;
+                    if (!isAChecked && isBChecked) return 1;
+                }
+                return a.name.localeCompare(b.name);
+            });
+
+            checklistContainer.innerHTML = '';
+
+            if (items.length === 0) {
+                checklistContainer.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;">Ничего не найдено</div>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const isChecked = editingCategoryId ? (materialMap[item.name] === editingCategoryId) : false;
+                const label = document.createElement('label');
+                label.className = `material-checkbox-item ${isChecked ? 'checked' : ''}`;
+                
+                label.innerHTML = `
+                    <input type="checkbox" value="${item.name}" ${isChecked ? 'checked' : ''} onchange="toggleItemCheckboxStyle(this)"> 
+                    <span>${item.name}</span>
+                `;
+                checklistContainer.appendChild(label);
+            });
+        }
+
+        function toggleItemCheckboxStyle(checkbox) {
+            const label = checkbox.closest('.material-checkbox-item');
+            if (checkbox.checked) {
+                label.classList.add('checked');
+            } else {
+                label.classList.remove('checked');
+            }
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').classList.remove('open');
+            editingCategoryId = null;
+        }
+
+        function saveCategory() {
+            const input = document.getElementById('newCategoryInput');
+            const catName = input.value.trim();
+            if (!catName) {
+                showToast('Введите название категории!', 'error');
+                return;
+            }
+
+            let materialMap = getMaterialCategoriesMap();
+            const checkedBoxes = document.querySelectorAll('#materialsChecklist input[type="checkbox"]:checked');
+
+            if (editingCategoryId) {
+                const cat = categories.find(c => c.id === editingCategoryId);
+                if (cat) {
+                    cat.name = catName;
+                }
+
+                Object.keys(materialMap).forEach(matName => {
+                    if (materialMap[matName] === editingCategoryId) {
+                        materialMap[matName] = 'other';
+                    }
+                });
+
+                checkedBoxes.forEach(chk => {
+                    materialMap[chk.value] = editingCategoryId;
+                });
+
+                showToast('Категория успешно обновлена!');
+            } else {
+                const catId = 'cat_' + Date.now();
+                categories.push({ id: catId, name: catName });
+
+                checkedBoxes.forEach(chk => {
+                    materialMap[chk.value] = catId;
+                });
+
+                showToast('Категория успешно создана!');
+            }
+
+            saveCategories();
+            saveMaterialCategoryMap(materialMap);
+            closeCategoryModal();
+            initCategoriesUI();
+            renderTables();
+        }
+
+        function deleteCurrentCategory() {
+            if (!editingCategoryId) return;
+            const cat = categories.find(c => c.id === editingCategoryId);
+            if (!cat) return;
+
+            let materialMap = getMaterialCategoriesMap();
+            Object.keys(materialMap).forEach(matName => {
+                if (materialMap[matName] === editingCategoryId) {
+                    materialMap[matName] = 'other';
+                }
+            });
+            saveMaterialCategoryMap(materialMap);
+
+            categories = categories.filter(c => c.id !== editingCategoryId);
+            saveCategories();
+
+            if (currentCatFilter === editingCategoryId) {
+                currentCatFilter = 'all';
+            }
+
+            closeCategoryModal();
+            initCategoriesUI();
+            renderTables();
+            showToast('Категория удалена');
+        }
+
+        let currentCatFilter = 'all';
+        function filterTableByCategory(catId) {
+            currentCatFilter = catId;
+            renderCategoryFilterButtons();
+            filterTables();
+        }
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
@@ -459,7 +1015,6 @@
             document.getElementById('userAvatar').src = `https://api.dicebear.com/7.x/identicon/svg?seed=${username}`;
         }
 
-        // Загрузка данных из Gist с защитой от кеширования
         async function loadGitHubData(isBackground = false) {
             try {
                 const response = await fetch(DATA_URL + '?t=' + Date.now());
@@ -472,6 +1027,7 @@
                     obtained: item.obtained || 0
                 }));
 
+                autoAssignCategories(materialsData);
                 localStorage.setItem('dashboard_cached_materials', JSON.stringify(materialsData));
                 renderTables();
                 
@@ -491,6 +1047,8 @@
             const completedTbody = document.getElementById('completedTableBody');
             activeTbody.innerHTML = '';
             completedTbody.innerHTML = '';
+
+            const materialMap = getMaterialCategoriesMap();
 
             materialsData.forEach((item, index) => {
                 const itemName = item.name;
@@ -514,15 +1072,21 @@
                     statusText = 'В процессе';
                 }
 
+                const currentCat = materialMap[itemName] || 'other';
                 const historyInfo = itemHistory[itemName] || { user: 'Gist', text: 'Синхронизация' };
 
                 const tr = document.createElement('tr');
                 tr.setAttribute('data-status', status);
+                tr.setAttribute('data-category', currentCat);
                 tr.setAttribute('data-id', index);
                 tr.setAttribute('data-name', itemName);
 
                 tr.innerHTML = `
-                    <td><div class="item-cell"><span>${itemName}</span></div></td>
+                    <td>
+                        <div class="item-cell">
+                            <span>${itemName}</span>
+                        </div>
+                    </td>
                     <td class="req-val" data-value="${required}">${required.toLocaleString()}</td>
                     <td>
                         <button class="btn-edit-val" onclick="openEditModal(this)">
@@ -635,6 +1199,9 @@
         document.getElementById('editModal').addEventListener('click', (e) => {
             if (e.target.id === 'editModal') closeEditModal();
         });
+        document.getElementById('categoryModal').addEventListener('click', (e) => {
+            if (e.target.id === 'categoryModal') closeCategoryModal();
+        });
         document.getElementById('loginModal').addEventListener('click', (e) => {
             if (e.target.id === 'loginModal') closeLoginModal();
         });
@@ -697,13 +1264,13 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        let currentFilter = 'all';
+        const filterBtns = document.querySelectorAll('.filter-buttons .filter-btn');
+        let currentStatusFilter = 'all';
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                currentFilter = btn.getAttribute('data-filter');
+                currentStatusFilter = btn.getAttribute('data-filter');
                 filterTables();
             });
         });
@@ -715,10 +1282,13 @@
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 const status = row.getAttribute('data-status');
-                const matchesSearch = text.includes(query);
-                const matchesFilter = (currentFilter === 'all') || (status === currentFilter);
+                const category = row.getAttribute('data-category');
 
-                if (matchesSearch && matchesFilter) {
+                const matchesSearch = text.includes(query);
+                const matchesStatus = (currentStatusFilter === 'all') || (status === currentStatusFilter);
+                const matchesCategory = (currentCatFilter === 'all') || (category === currentCatFilter);
+
+                if (matchesSearch && matchesStatus && matchesCategory) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
@@ -748,10 +1318,10 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            initCategoriesUI();
             checkAuth();
             loadGitHubData(false);
 
-            // Автоматическое фоновое обновление данных каждые 30 секунд
             setInterval(() => {
                 loadGitHubData(true);
             }, 30000);

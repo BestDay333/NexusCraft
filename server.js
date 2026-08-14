@@ -10,6 +10,10 @@ const PORT = 3000;
 
 // Раздаем статические файлы из папки public
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Добавляем раздачу локального репозитория с иконками и текстурами Minecraft
+app.use('/minecraft-assets', express.static(path.join(__dirname, 'minecraft-assets')));
+
 app.use(express.json());
 
 // Эндпоинт с данными ресурсов (в будущем заменим на данные из таблицы)

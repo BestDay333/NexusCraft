@@ -531,9 +531,27 @@ tr:last-child td {
     border-bottom: none;
 }
 
+/* ИСПРАВЛЕНО: картинка и текст выстроились в ряд слева */
 .item-cell {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Стили для иконок майнкрафта */
+.minecraft-icon {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    min-height: 26px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .editor-tag {
@@ -773,4 +791,43 @@ tr:last-child td {
 
 .modal-body input:focus {
     border-color: var(--accent);
+}
+
+/* Кнопка добавления категории */
+.btn-add-category {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: background 0.2s;
+}
+.btn-add-category:hover {
+    background-color: #27ae60;
+}
+
+/* Выпадающий список категории в строке таблицы */
+.material-cat-select {
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.material-cat-select:focus {
+    outline: none;
+    border-color: #2ecc71;
+}
+
+/* Контейнер для динамических фильтров категорий */
+.category-filters-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    align-items: center;
 }
