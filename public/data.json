@@ -1,0 +1,1577 @@
+[
+  {
+    "name": "Гладкий камень",
+    "required": 14006,
+    "obtained": 14006
+  },
+  {
+    "name": "Каменные кирпичи",
+    "required": 2558,
+    "obtained": 2558
+  },
+  {
+    "name": "Камень",
+    "required": 1451,
+    "obtained": 1451
+  },
+  {
+    "name": "Каменные ступеньки",
+    "required": 760,
+    "obtained": 760
+  },
+  {
+    "name": "Натёчный камень",
+    "required": 320,
+    "obtained": 320
+  },
+  {
+    "name": "Ступеньки из каменного кирпича",
+    "required": 151,
+    "obtained": 151
+  },
+  {
+    "name": "Плита из каменного кирпича",
+    "required": 76,
+    "obtained": 76
+  },
+  {
+    "name": "Каменная плита",
+    "required": 30,
+    "obtained": 30
+  },
+  {
+    "name": "Каменная кнопка",
+    "required": 18,
+    "obtained": 18
+  },
+  {
+    "name": "Ограда из каменного кирпича",
+    "required": 17,
+    "obtained": 17
+  },
+  {
+    "name": "Чёрная керамика",
+    "required": 13,
+    "obtained": 13
+  },
+  {
+    "name": "Каменная нажимная пластина",
+    "required": 13,
+    "obtained": 13
+  },
+  {
+    "name": "Пурпурная керамика",
+    "required": 9,
+    "obtained": 9
+  },
+  {
+    "name": "Кварцевые кирпичи",
+    "required": 13683,
+    "obtained": 1000000000
+  },
+  {
+    "name": "Гладкий песчаник",
+    "required": 6888,
+    "obtained": 1792
+  },
+  {
+    "name": "Гладкий кварц",
+    "required": 6675,
+    "obtained": 0
+  },
+  {
+    "name": "Костный блок",
+    "required": 6670,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная древесина бледного дуба",
+    "required": 5489,
+    "obtained": 0
+  },
+  {
+    "name": "Кирпичи",
+    "required": 5432,
+    "obtained": 0
+  },
+  {
+    "name": "Светло-серая керамика",
+    "required": 4394,
+    "obtained": 288
+  },
+  {
+    "name": "Обтёсанная мангровая древесина",
+    "required": 3928,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровые доски",
+    "required": 3770,
+    "obtained": 0
+  },
+  {
+    "name": "Дёрн",
+    "required": 3694,
+    "obtained": 0
+  },
+  {
+    "name": "Песчаниковая ограда",
+    "required": 3692,
+    "obtained": 3692
+  },
+  {
+    "name": "Скалк",
+    "required": 3348,
+    "obtained": 0
+  },
+  {
+    "name": "Жёлтая керамика",
+    "required": 3332,
+    "obtained": 0
+  },
+  {
+    "name": "Гранит",
+    "required": 2880,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная берёзовая древесина",
+    "required": 6004,
+    "obtained": 3398
+  },
+  {
+    "name": "Ступеньки из гладкого кварца",
+    "required": 2519,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовый люк",
+    "required": 2271,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевые доски",
+    "required": 2175,
+    "obtained": 0
+  },
+  {
+    "name": "Люк из бледного дуба",
+    "required": 2128,
+    "obtained": 0
+  },
+  {
+    "name": "Лаймовая керамика",
+    "required": 2037,
+    "obtained": 0
+  },
+  {
+    "name": "Зелёная керамика",
+    "required": 1902,
+    "obtained": 0
+  },
+  {
+    "name": "Кирпичная плита",
+    "required": 1779,
+    "obtained": 0
+  },
+  {
+    "name": "Красная керамика",
+    "required": 3497,
+    "obtained": 3497
+  },
+  {
+    "name": "Диорит",
+    "required": 1759,
+    "obtained": 0
+  },
+  {
+    "name": "Полированный диорит",
+    "required": 1736,
+    "obtained": 0
+  },
+  {
+    "name": "Красный ковёр",
+    "required": 1733,
+    "obtained": 0
+  },
+  {
+    "name": "Жёлтый ковёр",
+    "required": 1675,
+    "obtained": 1675
+  },
+  {
+    "name": "Синее стекло",
+    "required": 1568,
+    "obtained": 0
+  },
+  {
+    "name": "Листья азалии",
+    "required": 1532,
+    "obtained": 0
+  },
+  {
+    "name": "Белая шерсть",
+    "required": 1396,
+    "obtained": 1396
+  },
+  {
+    "name": "Книжная полка",
+    "required": 1380,
+    "obtained": 0
+  },
+  {
+    "name": "Земля",
+    "required": 1350,
+    "obtained": 0
+  },
+  {
+    "name": "Еловый люк",
+    "required": 1342,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из гладкого камня",
+    "required": 1797,
+    "obtained": 496
+  },
+  {
+    "name": "Андезит",
+    "required": 1246,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовые листья",
+    "required": 1245,
+    "obtained": 0
+  },
+  {
+    "name": "Голубое стекло",
+    "required": 1232,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевая плита",
+    "required": 1210,
+    "obtained": 0
+  },
+  {
+    "name": "Люк из джунглевого дерева",
+    "required": 1134,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное дубовое бревно",
+    "required": 1029,
+    "obtained": 0
+  },
+  {
+    "name": "Кальцит",
+    "required": 2435,
+    "obtained": 1436
+  },
+  {
+    "name": "Диоритовая ограда",
+    "required": 977,
+    "obtained": 0
+  },
+  {
+    "name": "Доски из джунглевого дерева",
+    "required": 934,
+    "obtained": 0
+  },
+  {
+    "name": "Свеча",
+    "required": 904,
+    "obtained": 0
+  },
+  {
+    "name": "Туф",
+    "required": 877,
+    "obtained": 0
+  },
+  {
+    "name": "Доски из тёмного дуба",
+    "required": 861,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная дубовая древесина",
+    "required": 845,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовые листья",
+    "required": 826,
+    "obtained": 0
+  },
+  {
+    "name": "Гладкий красный песчаник",
+    "required": 824,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровые ступеньки",
+    "required": 779,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовый люк",
+    "required": 760,
+    "obtained": 0
+  },
+  {
+    "name": "Люк из тёмного дуба",
+    "required": 752,
+    "obtained": 0
+  },
+  {
+    "name": "Кирпичные ступеньки",
+    "required": 746,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовый забор",
+    "required": 738,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная древесина джунглевого дерева",
+    "required": 720,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное бревно тёмного дуба",
+    "required": 712,
+    "obtained": 0
+  },
+  {
+    "name": "Листья цветущей азалии",
+    "required": 705,
+    "obtained": 0
+  },
+  {
+    "name": "Резная книжная полка",
+    "required": 679,
+    "obtained": 0
+  },
+  {
+    "name": "Белая керамика",
+    "required": 4206,
+    "obtained": 3542
+  },
+  {
+    "name": "Фонарь",
+    "required": 630,
+    "obtained": 0
+  },
+  {
+    "name": "Голубая керамика",
+    "required": 629,
+    "obtained": 0
+  },
+  {
+    "name": "Блок пчелиных сот",
+    "required": 617,
+    "obtained": 0
+  },
+  {
+    "name": "Жёлтый бетон",
+    "required": 592,
+    "obtained": 0
+  },
+  {
+    "name": "Ведро воды",
+    "required": 570,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из полированного туфа",
+    "required": 570,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовая табличка",
+    "required": 569,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из джунглевого дерева",
+    "required": 562,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное бревно джунглевого дерева",
+    "required": 554,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из гладкого песчаника",
+    "required": 551,
+    "obtained": 551
+  },
+  {
+    "name": "Узорчатая ваза",
+    "required": 543,
+    "obtained": 0
+  },
+  {
+    "name": "Терракота",
+    "required": 3996,
+    "obtained": 3456
+  },
+  {
+    "name": "Зелёная стеклянная панель",
+    "required": 518,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из гладкого песчаника",
+    "required": 512,
+    "obtained": 512
+  },
+  {
+    "name": "Андезитовая ограда",
+    "required": 507,
+    "obtained": 0
+  },
+  {
+    "name": "Полированный андезит",
+    "required": 491,
+    "obtained": 0
+  },
+  {
+    "name": "Снег",
+    "required": 478,
+    "obtained": 0
+  },
+  {
+    "name": "Блок мха",
+    "required": 468,
+    "obtained": 0
+  },
+  {
+    "name": "Табличка из бледного дуба",
+    "required": 441,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровая кнопка",
+    "required": 437,
+    "obtained": 0
+  },
+  {
+    "name": "Бочка",
+    "required": 434,
+    "obtained": 0
+  },
+  {
+    "name": "Красная глазурованная керамика",
+    "required": 432,
+    "obtained": 384
+  },
+  {
+    "name": "Дубовая табличка",
+    "required": 429,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная акациевая древесина",
+    "required": 426,
+    "obtained": 0
+  },
+  {
+    "name": "Еловые ступеньки",
+    "required": 424,
+    "obtained": 0
+  },
+  {
+    "name": "Цветочный горшок",
+    "required": 414,
+    "obtained": 0
+  },
+  {
+    "name": "Кварцевые ступеньки",
+    "required": 411,
+    "obtained": 411
+  },
+  {
+    "name": "Еловая плита",
+    "required": 406,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное мангровое бревно",
+    "required": 396,
+    "obtained": 0
+  },
+  {
+    "name": "Мак",
+    "required": 395,
+    "obtained": 0
+  },
+  {
+    "name": "Свет",
+    "required": 393,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное акациевое бревно",
+    "required": 388,
+    "obtained": 0
+  },
+  {
+    "name": "Кафедра",
+    "required": 386,
+    "obtained": 0
+  },
+  {
+    "name": "Еловые доски",
+    "required": 384,
+    "obtained": 0
+  },
+  {
+    "name": "Лестница",
+    "required": 372,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из гладкого кварца",
+    "required": 365,
+    "obtained": 0
+  },
+  {
+    "name": "Блок рудного золота",
+    "required": 397,
+    "obtained": 41
+  },
+  {
+    "name": "Оранжевая керамика",
+    "required": 2079,
+    "obtained": 2079
+  },
+  {
+    "name": "Полированный гранит",
+    "required": 335,
+    "obtained": 0
+  },
+  {
+    "name": "Полевые цветы",
+    "required": 308,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из джунглевого дерева",
+    "required": 302,
+    "obtained": 0
+  },
+  {
+    "name": "Кварцевая колонна",
+    "required": 704,
+    "obtained": 532
+  },
+  {
+    "name": "Синяя керамика",
+    "required": 265,
+    "obtained": 265
+  },
+  {
+    "name": "Еловый забор",
+    "required": 280,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевая кнопка",
+    "required": 254,
+    "obtained": 0
+  },
+  {
+    "name": "Саманные кирпичи",
+    "required": 253,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовая плита",
+    "required": 248,
+    "obtained": 0
+  },
+  {
+    "name": "Низкая трава",
+    "required": 234,
+    "obtained": 0
+  },
+  {
+    "name": "Кварцевый блок",
+    "required": 223,
+    "obtained": 223
+  },
+  {
+    "name": "Дубовые ступеньки",
+    "required": 223,
+    "obtained": 0
+  },
+  {
+    "name": "Незерак",
+    "required": 2266,
+    "obtained": 2048
+  },
+  {
+    "name": "Замшелый булыжник",
+    "required": 214,
+    "obtained": 0
+  },
+  {
+    "name": "Одуванчик",
+    "required": 212,
+    "obtained": 0
+  },
+  {
+    "name": "Сундук",
+    "required": 203,
+    "obtained": 0
+  },
+  {
+    "name": "Оранжевый ковёр",
+    "required": 199,
+    "obtained": 199
+  },
+  {
+    "name": "Плита из бледного дуба",
+    "required": 192,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из бледного дуба",
+    "required": 190,
+    "obtained": 0
+  },
+  {
+    "name": "Диоритовая плита",
+    "required": 177,
+    "obtained": 0
+  },
+  {
+    "name": "Коричневая кровать",
+    "required": 176,
+    "obtained": 0
+  },
+  {
+    "name": "Еловая табличка",
+    "required": 171,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из полированного гранита",
+    "required": 171,
+    "obtained": 0
+  },
+  {
+    "name": "Замшелые каменные кирпичи",
+    "required": 169,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровые листья",
+    "required": 169,
+    "obtained": 0
+  },
+  {
+    "name": "Полированный туф",
+    "required": 168,
+    "obtained": 0
+  },
+  {
+    "name": "Саманная ограда",
+    "required": 168,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из полированного диорита",
+    "required": 164,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из тёмного дуба",
+    "required": 161,
+    "obtained": 0
+  },
+  {
+    "name": "Нажимная пластина из джунглевого дерева",
+    "required": 160,
+    "obtained": 0
+  },
+  {
+    "name": "Белая стеклянная панель",
+    "required": 153,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из полированного диорита",
+    "required": 153,
+    "obtained": 0
+  },
+  {
+    "name": "Блок бледного мха",
+    "required": 151,
+    "obtained": 0
+  },
+  {
+    "name": "Красная шерсть",
+    "required": 149,
+    "obtained": 149
+  },
+  {
+    "name": "Андезитовая плита",
+    "required": 147,
+    "obtained": 0
+  },
+  {
+    "name": "Листья джунглевого дерева",
+    "required": 146,
+    "obtained": 0
+  },
+  {
+    "name": "Белый тюльпан",
+    "required": 144,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная еловая древесина",
+    "required": 135,
+    "obtained": 0
+  },
+  {
+    "name": "Гранитные ступеньки",
+    "required": 128,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из полированного гранита",
+    "required": 123,
+    "obtained": 0
+  },
+  {
+    "name": "Паутина",
+    "required": 121,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовые ступеньки",
+    "required": 120,
+    "obtained": 0
+  },
+  {
+    "name": "Диоритовые ступеньки",
+    "required": 120,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровая табличка",
+    "required": 120,
+    "obtained": 0
+  },
+  {
+    "name": "Вощёный состаренный медный блок",
+    "required": 118,
+    "obtained": 0
+  },
+  {
+    "name": "Вощёная состаренная медная лампа",
+    "required": 114,
+    "obtained": 0
+  },
+  {
+    "name": "Золотой блок",
+    "required": 113,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровая плита",
+    "required": 112,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевая древесина",
+    "required": 111,
+    "obtained": 0
+  },
+  {
+    "name": "Морской огурец",
+    "required": 111,
+    "obtained": 0
+  },
+  {
+    "name": "Громоотвод",
+    "required": 109,
+    "obtained": 0
+  },
+  {
+    "name": "Розовый куст",
+    "required": 109,
+    "obtained": 0
+  },
+  {
+    "name": "Кнопка из бледного дуба",
+    "required": 107,
+    "obtained": 0
+  },
+  {
+    "name": "Бамбуковый люк",
+    "required": 102,
+    "obtained": 0
+  },
+  {
+    "name": "Высокая трава",
+    "required": 97,
+    "obtained": 0
+  },
+  {
+    "name": "Ворота из бледного дуба",
+    "required": 96,
+    "obtained": 0
+  },
+  {
+    "name": "Очищенные багровые гифы",
+    "required": 92,
+    "obtained": 0
+  },
+  {
+    "name": "Бирюзовая керамика",
+    "required": 89,
+    "obtained": 89
+  },
+  {
+    "name": "Зелёный бетон",
+    "required": 82,
+    "obtained": 0
+  },
+  {
+    "name": "Нотный блок",
+    "required": 80,
+    "obtained": 0
+  },
+  {
+    "name": "Белый ковёр",
+    "required": 75,
+    "obtained": 75
+  },
+  {
+    "name": "Красный сухой бетон",
+    "required": 74,
+    "obtained": 0
+  },
+  {
+    "name": "Полированный чернит",
+    "required": 74,
+    "obtained": 0
+  },
+  {
+    "name": "Ромашка",
+    "required": 73,
+    "obtained": 0
+  },
+  {
+    "name": "Светло-серая шерсть",
+    "required": 72,
+    "obtained": 72
+  },
+  {
+    "name": "Гранитная ограда",
+    "required": 70,
+    "obtained": 0
+  },
+  {
+    "name": "Серая шерсть",
+    "required": 70,
+    "obtained": 70
+  },
+  {
+    "name": "Верстак",
+    "required": 66,
+    "obtained": 0
+  },
+  {
+    "name": "Красный тюльпан",
+    "required": 66,
+    "obtained": 0
+  },
+  {
+    "name": "Забор из бледного дуба",
+    "required": 60,
+    "obtained": 0
+  },
+  {
+    "name": "Оранжевый тюльпан",
+    "required": 60,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевый люк",
+    "required": 56,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовые доски",
+    "required": 55,
+    "obtained": 0
+  },
+  {
+    "name": "Светокамень",
+    "required": 54,
+    "obtained": 0
+  },
+  {
+    "name": "Очищенная багровая ножка",
+    "required": 50,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовый забор",
+    "required": 46,
+    "obtained": 0
+  },
+  {
+    "name": "Ограда из красного песчаника",
+    "required": 44,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовые ворота",
+    "required": 42,
+    "obtained": 0
+  },
+  {
+    "name": "Железная цепь",
+    "required": 42,
+    "obtained": 0
+  },
+  {
+    "name": "Резной кварцевый блок",
+    "required": 40,
+    "obtained": 40
+  },
+  {
+    "name": "Полированно-чернитные кирпичи",
+    "required": 40,
+    "obtained": 0
+  },
+  {
+    "name": "Вощёный состаренный резной медный блок",
+    "required": 39,
+    "obtained": 0
+  },
+  {
+    "name": "Нить",
+    "required": 39,
+    "obtained": 0
+  },
+  {
+    "name": "Пион",
+    "required": 39,
+    "obtained": 0
+  },
+  {
+    "name": "Стержень Энда",
+    "required": 38,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевый забор",
+    "required": 37,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовая подвесная табличка",
+    "required": 37,
+    "obtained": 0
+  },
+  {
+    "name": "Плита из полированного андезита",
+    "required": 37,
+    "obtained": 0
+  },
+  {
+    "name": "Бамбуковый забор",
+    "required": 36,
+    "obtained": 0
+  },
+  {
+    "name": "Моховой ковёр",
+    "required": 34,
+    "obtained": 0
+  },
+  {
+    "name": "Табличка из тёмного дуба",
+    "required": 34,
+    "obtained": 0
+  },
+  {
+    "name": "Ткацкий станок",
+    "required": 34,
+    "obtained": 0
+  },
+  {
+    "name": "Кнопка из тёмного дуба",
+    "required": 33,
+    "obtained": 0
+  },
+  {
+    "name": "Дверь из тёмного дуба",
+    "required": 32,
+    "obtained": 0
+  },
+  {
+    "name": "Костёр",
+    "required": 32,
+    "obtained": 0
+  },
+  {
+    "name": "Бамбуковая кнопка",
+    "required": 30,
+    "obtained": 0
+  },
+  {
+    "name": "Коричневая шерсть",
+    "required": 30,
+    "obtained": 30
+  },
+  {
+    "name": "Ограда из красного незерского кирпича",
+    "required": 30,
+    "obtained": 0
+  },
+  {
+    "name": "Хаустония серая",
+    "required": 29,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевая табличка",
+    "required": 28,
+    "obtained": 0
+  },
+  {
+    "name": "Эндерняк",
+    "required": 28,
+    "obtained": 0
+  },
+  {
+    "name": "Печь",
+    "required": 25,
+    "obtained": 0
+  },
+  {
+    "name": "Забор из джунглевого дерева",
+    "required": 24,
+    "obtained": 0
+  },
+  {
+    "name": "Лаймовая шерсть",
+    "required": 24,
+    "obtained": 24
+  },
+  {
+    "name": "Руда незерского кварца",
+    "required": 23,
+    "obtained": 23
+  },
+  {
+    "name": "Белый сухой бетон",
+    "required": 23,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовая плита",
+    "required": 22,
+    "obtained": 0
+  },
+  {
+    "name": "Красный флаг",
+    "required": 21,
+    "obtained": 0
+  },
+  {
+    "name": "Почва душ",
+    "required": 21,
+    "obtained": 0
+  },
+  {
+    "name": "Коричневая керамика",
+    "required": 20,
+    "obtained": 20
+  },
+  {
+    "name": "Плита из тёмного дуба",
+    "required": 19,
+    "obtained": 0
+  },
+  {
+    "name": "Акациевые ступеньки",
+    "required": 18,
+    "obtained": 0
+  },
+  {
+    "name": "Песок душ",
+    "required": 18,
+    "obtained": 0
+  },
+  {
+    "name": "Пурпуровый пилон",
+    "required": 18,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из полированного туфа",
+    "required": 18,
+    "obtained": 0
+  },
+  {
+    "name": "Берёзовая кнопка",
+    "required": 16,
+    "obtained": 0
+  },
+  {
+    "name": "Блок бамбука",
+    "required": 16,
+    "obtained": 0
+  },
+  {
+    "name": "Кнопка из полированного чернита",
+    "required": 15,
+    "obtained": 0
+  },
+  {
+    "name": "Кувшинница",
+    "required": 15,
+    "obtained": 0
+  },
+  {
+    "name": "Блок искажённого нароста",
+    "required": 14,
+    "obtained": 0
+  },
+  {
+    "name": "Красный песчаник",
+    "required": 14,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровый люк",
+    "required": 14,
+    "obtained": 0
+  },
+  {
+    "name": "Азалия",
+    "required": 13,
+    "obtained": 0
+  },
+  {
+    "name": "Синий василёк",
+    "required": 13,
+    "obtained": 13
+  },
+  {
+    "name": "Кирпичная ограда",
+    "required": 12,
+    "obtained": 0
+  },
+  {
+    "name": "Кнопка из джунглевого дерева",
+    "required": 12,
+    "obtained": 0
+  },
+  {
+    "name": "Коптильня",
+    "required": 12,
+    "obtained": 0
+  },
+  {
+    "name": "Папоротник",
+    "required": 12,
+    "obtained": 0
+  },
+  {
+    "name": "Сирень",
+    "required": 12,
+    "obtained": 0
+  },
+  {
+    "name": "Дубовая нажимная пластина",
+    "required": 11,
+    "obtained": 0
+  },
+  {
+    "name": "Туфовые ступеньки",
+    "required": 11,
+    "obtained": 0
+  },
+  {
+    "name": "Улей",
+    "required": 11,
+    "obtained": 0
+  },
+  {
+    "name": "Черепашье яйцо",
+    "required": 11,
+    "obtained": 0
+  },
+  {
+    "name": "Бутылочка воды",
+    "required": 10,
+    "obtained": 0
+  },
+  {
+    "name": "Железные прутья",
+    "required": 10,
+    "obtained": 0
+  },
+  {
+    "name": "Котёл",
+    "required": 10,
+    "obtained": 0
+  },
+  {
+    "name": "Пурпур",
+    "required": 10,
+    "obtained": 0
+  },
+  {
+    "name": "Розовая керамика",
+    "required": 10,
+    "obtained": 10
+  },
+  {
+    "name": "Факельник",
+    "required": 10,
+    "obtained": 0
+  },
+  {
+    "name": "Андезитовые ступеньки",
+    "required": 9,
+    "obtained": 0
+  },
+  {
+    "name": "Магнетит",
+    "required": 9,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанная древесина тёмного дуба",
+    "required": 9,
+    "obtained": 0
+  },
+  {
+    "name": "Оранжевая шерсть",
+    "required": 9,
+    "obtained": 9
+  },
+  {
+    "name": "Плотная грязь",
+    "required": 9,
+    "obtained": 0
+  },
+  {
+    "name": "Сноп сена",
+    "required": 9,
+    "obtained": 0
+  },
+  {
+    "name": "Губка",
+    "required": 8,
+    "obtained": 0
+  },
+  {
+    "name": "Лаймовый ковёр",
+    "required": 8,
+    "obtained": 8
+  },
+  {
+    "name": "Лёд",
+    "required": 8,
+    "obtained": 0
+  },
+  {
+    "name": "Песчаник",
+    "required": 8,
+    "obtained": 8
+  },
+  {
+    "name": "Серый сухой бетон",
+    "required": 8,
+    "obtained": 0
+  },
+  {
+    "name": "Голова игрока",
+    "required": 7,
+    "obtained": 0
+  },
+  {
+    "name": "Кварцевая плита",
+    "required": 7,
+    "obtained": 7
+  },
+  {
+    "name": "Коричневый гриб",
+    "required": 7,
+    "obtained": 0
+  },
+  {
+    "name": "Табличка из джунглевого дерева",
+    "required": 7,
+    "obtained": 0
+  },
+  {
+    "name": "Цветущая азалия",
+    "required": 7,
+    "obtained": 0
+  },
+  {
+    "name": "Бамбуковая табличка",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Бамбуковые ворота",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Блок незерского нароста",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Доски из бледного дуба",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Искажённые доски",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Магма",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Морской фонарь",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Оранжевая кровать",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Очищенные искажённые гифы",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Плотный лёд",
+    "required": 6,
+    "obtained": 0
+  },
+  {
+    "name": "Фиолетовая керамика",
+    "required": 6,
+    "obtained": 6
+  },
+  {
+    "name": "Блок снега",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Булыжник",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Высокая сухая трава",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Корнистая земля",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Красный гриб",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Саженец акации",
+    "required": 5,
+    "obtained": 0
+  },
+  {
+    "name": "Чёрный ковёр",
+    "required": 5,
+    "obtained": 5
+  },
+  {
+    "name": "Берёзовая нажимная пластина",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Блок коричневого гриба",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Лук-батун",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Мицелий",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Мёртвый куст",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Обсидиан",
+    "required": 4,
+    "obtained": 0
+  },
+  {
+    "name": "Красный бетон",
+    "required": 3,
+    "obtained": 0
+  },
+  {
+    "name": "Мангровая дверь",
+    "required": 3,
+    "obtained": 0
+  },
+  {
+    "name": "Обтёсанное берёзовое бревно",
+    "required": 3,
+    "obtained": 0
+  },
+  {
+    "name": "Семена пшеницы",
+    "required": 3,
+    "obtained": 0
+  },
+  {
+    "name": "Багровая ножка",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Багровые доски",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Багровый гриб",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Бледный моховой ковёр",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Еловая дверь",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Зелёная шерсть",
+    "required": 2,
+    "obtained": 2
+  },
+  {
+    "name": "Искажённая ножка",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Камнерез",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Морковь",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Синяя орхидея",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Цветок кактуса",
+    "required": 2,
+    "obtained": 0
+  },
+  {
+    "name": "Большой аметистовый бутон",
+    "required": 1,
+    "obtained": 1
+  },
+  {
+    "name": "Акациевое бревно",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Блок коралла-мозговика",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Большегрузная весовая пластина",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Вощёная медная лампа",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Искажённый гриб",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Компостница",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Редстоуновый блок",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Розовый бетон",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Ступеньки из гладкого красного песчаника",
+    "required": 1,
+    "obtained": 0
+  },
+  {
+    "name": "Чёрный флаг",
+    "required": 1,
+    "obtained": 0
+  }
+]

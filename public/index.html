@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Project Dashboard - GitHub Edition</title>
+    <title>Minecraft Project Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -439,14 +439,14 @@
         <!-- Шапка -->
         <header class="header">
             <div class="header-content">
-                <div class="badge-tag"><i class="fa-brands fa-github"></i> GitHub Edition</div>
+                <div class="badge-tag"><i class="fa-solid fa-cloud"></i> Cloudflare Edition</div>
                 <h1>Проспектум — Дашборд проекта</h1>
-                <p class="subtitle">Синхронизация данных через data.json</p>
+                <p class="subtitle">Локальная синхронизация данных через data.json</p>
             </div>
             
             <div class="header-right">
-                <button class="btn-sync-header" onclick="loadGitHubData(false)" title="Синхронизировать с Gist (Авто каждые 30с)">
-                    <i class="fa-solid fa-rotate"></i> <span>Gist sync</span>
+                <button class="btn-sync-header" onclick="loadProjectData(false)" title="Синхронизировать данные">
+                    <i class="fa-solid fa-rotate"></i> <span>Обновить</span>
                 </button>
                 <div class="auth-container" id="authContainer">
                     <button class="btn-auth" id="loginBtn" onclick="openLoginModal()">
@@ -658,7 +658,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        const DATA_URL = "https://gist.githubusercontent.com/BestDay333/b98951e791a40632886fc26d1ab18631/raw/15d3e4d61ceb3b49d910138e16e204297c5704e4/data.json";
+        const DATA_URL = "./data.json"; // Загрузка данных локально с хостинга Cloudflare
 
         let materialsData = [];
         let savedObtained = JSON.parse(localStorage.getItem('dashboard_obtained')) || {};
@@ -1015,7 +1015,7 @@
             document.getElementById('userAvatar').src = `https://api.dicebear.com/7.x/identicon/svg?seed=${username}`;
         }
 
-        async function loadGitHubData(isBackground = false) {
+        async function loadProjectData(isBackground = false) {
             try {
                 const response = await fetch(DATA_URL + '?t=' + Date.now());
                 if (!response.ok) throw new Error('Не удалось загрузить data.json');
@@ -1032,7 +1032,7 @@
                 renderTables();
                 
                 if (!isBackground) {
-                    showToast('Данные успешно обновлены из Gist!');
+                    showToast('Данные успешно обновлены!');
                 }
             } catch (err) {
                 if (!isBackground) {
@@ -1073,7 +1073,7 @@
                 }
 
                 const currentCat = materialMap[itemName] || 'other';
-                const historyInfo = itemHistory[itemName] || { user: 'Gist', text: 'Синхронизация' };
+                const historyInfo = itemHistory[itemName] || { user: 'System', text: 'Синхронизация' };
 
                 const tr = document.createElement('tr');
                 tr.setAttribute('data-status', status);
@@ -1105,7 +1105,7 @@
                     </td>
                     <td>
                         <div class="history-cell">
-                            <span class="history-text ${historyInfo.user === 'Gist' ? 'muted' : ''}">${historyInfo.user}: ${historyInfo.text}</span>
+                            <span class="history-text ${historyInfo.user === 'System' ? 'muted' : ''}">${historyInfo.user}: ${historyInfo.text}</span>
                         </div>
                     </td>
                 `;
@@ -1279,6 +1279,7 @@
             const query = document.getElementById('searchInputActive').value.toLowerCase();
             const rows = document.querySelectorAll('#activeTableBody tr');
 
+            rows.rows = rows || [];
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 const status = row.getAttribute('data-status');
@@ -1320,10 +1321,10 @@
         window.addEventListener('DOMContentLoaded', () => {
             initCategoriesUI();
             checkAuth();
-            loadGitHubData(false);
+            loadProjectData(false);
 
             setInterval(() => {
-                loadGitHubData(true);
+                loadProjectData(true);
             }, 30000);
         });
     </script>
