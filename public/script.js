@@ -108,7 +108,7 @@ function addNewCategory() {
     loadTableData(); // Перезагружаем таблицу для обновления селектов
 }
 
-// Фильтрация таблицы
+// Фильтрация
 function filterTableByCategory(catId, clickedBtn) {
     document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
     clickedBtn.classList.add('active');
