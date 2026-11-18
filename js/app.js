@@ -129,7 +129,7 @@ function parseObtainedValue(input) {
     let total = 0;
 
     // 1k / 2к
-    s = s.replace(/(\d+(?:[.,]\d+)?)\s*[kк]\b/g, (_, num) => {
+    s = s.replace(/(\d+(?:[.,]\d+)?)\s*[kк](?![а-яёa-z])/g, (_, num) => {
         total += parseFloat(num.replace(',', '.')) * 1000;
         return '';
     });
@@ -157,7 +157,7 @@ function parseObtainedValue(input) {
     try {
         if (cleanExpr.trim()) {
             const res = Function(`'use strict'; return (${cleanExpr})`)();
-            if (!isNaN(res)) total += res;
+            if (Number.isFinite(res)) total += res;
         }
     } catch (e) {
         const nums = cleanExpr.match(/\d+(?:\.\d+)?/g);
@@ -377,7 +377,7 @@ function setupUpload() {
     if (!dropzone || !input) return;
 
     dropzone.addEventListener('click', (e) => {
-        if (e.target.closest('.upload-status')) return;
+        if (e.target === input || e.target.closest('.upload-status')) return;
         input.click();
     });
     dropzone.addEventListener('keydown', (e) => {
@@ -924,7 +924,7 @@ function openEditCategoryModal(catId) {
     $('#categoryModalTitle').textContent = 'Редактировать категорию';
     $('#categoryModalSubtitle').textContent = 'Измените название или состав материалов';
     $('#categorySubmitBtn').textContent = 'Сохранить';
-    $('#categoryDeleteBtn').style.display = 'inline-flex';
+    $('#categoryDeleteBtn').style.display = catId === 'other' ? 'none' : 'inline-flex';
     $('#newCategoryInput').value = cat.name;
     $('#modalMaterialSearch').value = '';
     renderMaterialsChecklist();
@@ -1136,7 +1136,8 @@ async function importProject(file) {
             blockCount: Number(p.blockCount) || 0,
             uniqueBlocks: Number(p.uniqueBlocks) || Object.keys(p.counts || {}).length,
             counts: p.counts && typeof p.counts === 'object' ? p.counts : {},
-            addedAt: p.addedAt || Date.now()
+            addedAt: p.addedAt || Date.now(),
+            imported: true
         }));
         obtained = data.obtained && typeof data.obtained === 'object' ? data.obtained : {};
         history = data.history && typeof data.history === 'object' ? data.history : {};
@@ -1340,7 +1341,9 @@ async function showPreviewFor(id) {
             'Предпросмотр недоступен',
             project.demo
                 ? 'Демо-данные не содержат файл схемы — загрузите .schem или .litematic'
-                : 'Исходный файл не найден в браузере — загрузите схему заново'
+                : project.imported
+                    ? 'JSON-экспорт не содержит исходный файл — загрузите схему заново'
+                    : 'Исходный файл не найден в браузере — загрузите схему заново'
         );
         preview.setModel(null);
         if (slider) {

@@ -249,7 +249,11 @@ function parseLitematic(data, fileName) {
 
 function parseStructure(data) {
     const sizeArr = data.size || data.Size || [0, 0, 0];
-    const paletteArr = data.palette || data.Palette || [];
+    let paletteArr = data.palette || data.Palette || [];
+    // Jigsaw-структуры хранят несколько палитр; берём первую.
+    if (!paletteArr.length && Array.isArray(data.palettes) && data.palettes.length) {
+        paletteArr = data.palettes[0] || [];
+    }
     const blocksArr = data.blocks || data.Blocks || [];
 
     const dimensions = { x: Number(sizeArr[0]) || 0, y: Number(sizeArr[1]) || 0, z: Number(sizeArr[2]) || 0 };
@@ -322,7 +326,9 @@ function detectAndParse(nbt, fileName) {
     }
 
     const isArrayLike = (v) => Array.isArray(v) || (ArrayBuffer.isView(v) && typeof v.length === 'number');
-    if (isArrayLike(data.blocks) && isArrayLike(data.palette) &&
+    const structurePalette = data.palette || data.Palette ||
+        (Array.isArray(data.palettes) ? data.palettes[0] : null);
+    if (isArrayLike(data.blocks) && isArrayLike(structurePalette) &&
         (isArrayLike(data.size) || isArrayLike(data.Size))) {
         return parseStructure(data);
     }

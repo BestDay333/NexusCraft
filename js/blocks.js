@@ -154,14 +154,27 @@ const RU_NAMES = {
 
 const CATEGORY_RULES = [
     ['wool', ['wool', 'carpet']],
-    ['clay', ['terracotta', 'glazed', 'clay', 'brick']],
-    ['wood', ['plank', 'log', 'wood', 'stem', 'fence', 'door', 'trapdoor', 'bookshelf', 'barrel', 'chest', 'crafting_table', 'bamboo', 'sapling']],
+    ['nether', ['nether', 'soul', 'basalt', 'blackstone', 'crimson', 'warped', 'magma', 'glowstone', 'obsidian', 'ancient_debris', 'shroomlight']],
+    ['redstone', ['redstone', 'piston', 'observer', 'repeater', 'comparator', 'dispenser', 'dropper', 'command_block', 'lever', 'button', 'pressure_plate', 'note_block', 'target', 'lamp']],
     ['glass', ['glass', 'pane']],
     ['metal', ['iron', 'gold', 'copper', 'diamond', 'emerald', 'lapis', 'netherite', 'amethyst', 'quartz', 'anvil', 'cauldron', 'hopper', 'rail']],
     ['plants', ['leaves', 'grass', 'flower', 'moss', 'vine', 'cactus', 'sugar_cane', 'coral', 'mushroom', 'wheat', 'hay', 'pumpkin', 'melon', 'wart']],
-    ['redstone', ['redstone', 'piston', 'observer', 'repeater', 'comparator', 'dispenser', 'dropper', 'command_block', 'lever', 'button', 'pressure_plate', 'note_block', 'target', 'lamp']],
-    ['nether', ['nether', 'soul', 'basalt', 'blackstone', 'crimson', 'warped', 'magma', 'glowstone', 'obsidian', 'ancient_debris', 'shroomlight']],
-    ['stone', ['stone', 'deepslate', 'granite', 'diorite', 'andesite', 'tuff', 'calcite', 'cobble', 'sandstone', 'sand', 'dirt', 'gravel', 'bedrock', 'prismarine', 'purpur', 'end_stone']]
+    ['wood', ['plank', 'log', 'wood', 'stem', 'fence', 'door', 'trapdoor', 'bookshelf', 'barrel', 'chest', 'crafting_table', 'bamboo', 'sapling', 'oak', 'spruce', 'birch', 'jungle', 'acacia', 'mangrove', 'cherry', 'crimson', 'warped']],
+    ['stone', ['stone', 'deepslate', 'granite', 'diorite', 'andesite', 'tuff', 'calcite', 'cobble', 'sandstone', 'sand', 'dirt', 'gravel', 'bedrock', 'prismarine', 'purpur', 'end_stone', 'sculk', 'nylium']],
+    ['clay', ['terracotta', 'glazed', 'clay', 'brick']]
+];
+
+// Те же правила для русских названий (демо-проект и импортированные списки).
+const RU_CATEGORY_RULES = [
+    ['wool', ['шерст', 'ковёр', 'ковер', 'кровать', 'знамя', 'флаг']],
+    ['nether', ['незер', 'незерак', 'багров', 'искажён', 'искажен', 'душа', 'душ ', 'магм', 'светокамен', 'обсидиан', 'древние обломки']],
+    ['redstone', ['редстоун', 'поршень', 'наблюдател', 'повторител', 'компаратор', 'раздатчик', 'выбрасыват', 'воронк', 'рельс', 'рычаг', 'кнопк', 'нажимн', 'лампа', 'нотный блок', 'мишень']],
+    ['glass', ['стекл', 'витраж']],
+    ['metal', ['желез', 'золот', 'медн', 'алмаз', 'изумруд', 'лазурит', 'незерит', 'аметист', 'кварц', 'наковальн', 'котёл', 'котел']],
+    ['plants', ['листв', 'листья', 'трав', 'цвет', 'кактус', 'бамбук', 'тростник', 'арбуз', 'тыкв', 'гриб', 'мох', 'саженец', 'азали', 'пшениц', 'морков', 'картоф', 'свёкл', 'свекл', 'водоросл', 'коралл']],
+    ['wood', ['доск', 'бревн', 'древесин', 'дерев', 'стебель', 'забор', 'дверь', 'люк', 'сундук', 'бочк', 'верстак', 'книжн', 'табличк', 'лестниц', 'каркас', 'шкаф']],
+    ['stone', ['камен', 'булыж', 'гранит', 'диорит', 'андезит', 'сланец', 'туф', 'кальцит', 'базальт', 'чернит', 'песчаник', 'песок', 'гравий', 'земля', 'дёрн', 'дерн', 'бедрок', 'снег', 'лёд', 'лед', 'скалк', 'натёчн', 'натечн', 'пурпур', 'энд']],
+    ['clay', ['керамик', 'терракот', 'глинян', 'глина', 'глазур', 'кирпич']]
 ];
 
 const LEGACY_IDS = {
@@ -230,6 +243,37 @@ const LEGACY_IDS = {
 const DYE_SUFFIXES = ['wool', 'concrete', 'concrete_powder', 'terracotta', 'stained_glass',
     'stained_glass_pane', 'carpet', 'bed', 'candle', 'shulker_box', 'glazed_terracotta'];
 
+// Основы составных названий: «дубовые ступеньки», «каменные кирпичи» и т. п.
+const BASE_RU = {
+    oak: 'Дуб', spruce: 'Ель', birch: 'Берёза', jungle: 'Тропическое дерево',
+    acacia: 'Акация', dark_oak: 'Тёмный дуб', mangrove: 'Мангровое дерево',
+    cherry: 'Вишня', bamboo: 'Бамбук', crimson: 'Багровый', warped: 'Искажённый',
+    stone_brick: 'Каменный кирпич', stone_bricks: 'Каменные кирпичи',
+    mossy_stone_bricks: 'Замшелые каменные кирпичи',
+    cracked_stone_bricks: 'Треснувшие каменные кирпичи',
+    chiseled_stone_bricks: 'Резные каменные кирпичи',
+    smooth_sandstone: 'Гладкий песчаник', cut_sandstone: 'Обрезанный песчаник',
+    chiseled_sandstone: 'Резной песчаник', cut_red_sandstone: 'Обрезанный красный песчаник',
+    chiseled_red_sandstone: 'Резной красный песчаник',
+    deepslate_brick: 'Кирпич из глубинного сланца',
+    deepslate_tile: 'Плитка из глубинного сланца',
+    deepslate_tiles: 'Плитка из глубинного сланца',
+    blackstone_brick: 'Кирпич из чернита', blackstone_bricks: 'Кирпичи из чернита',
+    polished_blackstone_brick: 'Полированный кирпич из чернита',
+    polished_blackstone_bricks: 'Полированные кирпичи из чернита',
+    mossy_cobblestone: 'Замшелый булыжник', cobblestone: 'Булыжник',
+    nether_brick: 'Незерский кирпич', red_nether_brick: 'Красный незерский кирпич',
+    end_stone_brick: 'Кирпич из энд-камня', end_stone_bricks: 'Кирпичи из энд-камня',
+    mud_brick: 'Грязевой кирпич', quartz: 'Кварц', purpur: 'Пурпур',
+    cut_copper: 'Обрезанная медь', oxidized_cut_copper: 'Окисленная обрезанная медь',
+    weathered_cut_copper: 'Состаренная обрезанная медь', exposed_cut_copper: 'Обнажённая обрезанная медь',
+    waxed_copper: 'Вощёная медь', waxed_cut_copper: 'Вощёная обрезанная медь',
+    iron: 'Железо', gold: 'Золото', copper: 'Медь',
+    tuff_brick: 'Туфовый кирпич', tuff_bricks: 'Туфовые кирпичи',
+    chiseled_tuff_bricks: 'Резные туфовые кирпичи',
+    polished_tuff: 'Полированный туф', chiseled_copper: 'Резная медь'
+};
+
 export function stripNamespace(id) {
     if (!id) return 'unknown';
     return String(id).replace(/^minecraft:/, '');
@@ -259,6 +303,7 @@ function splitDye(id) {
 export function displayName(rawId) {
     const id = baseId(rawId);
     if (RU_NAMES[id]) return RU_NAMES[id];
+    if (BASE_RU[id]) return BASE_RU[id];
 
     const dye = splitDye(id);
     if (dye && DYE_SUFFIXES.includes(dye.rest)) {
@@ -273,7 +318,7 @@ export function displayName(rawId) {
     if (SHAPE_RU[last] || SHAPE_RU[last2]) {
         const shape = SHAPE_RU[last2] || SHAPE_RU[last];
         const restId = id.slice(0, id.length - (SHAPE_RU[last2] ? last2.length : last.length) - 1);
-        const rest = RU_NAMES[restId] || prettify(restId);
+        const rest = RU_NAMES[restId] || BASE_RU[restId] || prettify(restId);
         return `${shape}: ${rest}`;
     }
     return prettify(id);
@@ -348,6 +393,12 @@ export function guessCategory(rawId) {
     const id = baseId(rawId);
     for (const [cat, words] of CATEGORY_RULES) {
         if (words.some(w => id.includes(w))) return cat;
+    }
+    if (/[а-яё]/i.test(id)) {
+        const lower = id.toLowerCase();
+        for (const [cat, words] of RU_CATEGORY_RULES) {
+            if (words.some(w => lower.includes(w))) return cat;
+        }
     }
     return 'other';
 }
