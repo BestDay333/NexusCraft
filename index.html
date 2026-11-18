@@ -3,577 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Project</title>
+    <meta name="description" content="NexusCraft — универсальный дашборд для схем Minecraft: загрузка .schem, .litematic и .nbt, список блоков, 3D-предпросмотр и учёт добычи ресурсов.">
+    <meta name="theme-color" content="#0b0e14">
+    <title>NexusCraft — схемы и материалы</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .collapsible-card .collapsible-header {
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.2s;
-        }
-        .collapsible-card .collapsible-header:hover {
-            background: rgba(255, 255, 255, 0.01);
-        }
-        .collapsible-card.collapsed .collapsible-content {
-            display: none;
-        }
-        .collapsible-card.collapsed .collapse-icon {
-            transform: rotate(-90deg);
-        }
-        .collapse-icon {
-            transition: transform 0.2s ease;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .section-badge {
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--accent);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .section-badge.success {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
-        }
-        .empty-placeholder {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            display: none;
-        }
-        .empty-placeholder i {
-            font-size: 28px;
-            margin-bottom: 8px;
-            opacity: 0.5;
-        }
-        .empty-placeholder p {
-            font-size: 13px;
-        }
-        .btn-edit-val {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
-            padding: 6px 10px;
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 13px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-        .btn-edit-val:hover {
-            border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.05);
-        }
-        .btn-edit-val i {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .modal-info-block {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            font-size: 12px;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--card-border);
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .modal-info-block span {
-            color: var(--text);
-            font-weight: 600;
-        }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            text-align: center;
-            width: max-content;
-            max-width: 100%;
-        }
-        .history-cell {
-            font-size: 12px;
-            white-space: nowrap;
-        }
-        .history-text {
-            display: inline-block;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: var(--text);
-            font-weight: 500;
-        }
-        .history-text.muted {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            background: #1e1e24;
-            color: var(--text);
-            border: 1px solid var(--card-border);
-            padding: 12px 18px;
-            border-radius: 10px;
-            font-size: 13px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideIn 0.3s ease;
-        }
-        .toast.success {
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-        .toast.success i {
-            color: var(--success);
-        }
-        .toast.error {
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-        .toast.error i {
-            color: #ef4444;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .item-cell {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-align: left;
-        }
-
-        .btn-sync-header {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            padding: 8px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-        .btn-sync-header:hover {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text);
-            border-color: var(--accent);
-        }
-
-        .category-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 14px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--card-border);
-        }
-        .category-filters-container {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .cat-filter-wrapper {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.2s;
-        }
-        .cat-filter-wrapper:hover {
-            border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.03);
-        }
-        .cat-filter-wrapper.active {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        .cat-filter-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 6px 10px 6px 12px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-        .cat-filter-wrapper.active .cat-filter-btn {
-            color: white;
-        }
-        .cat-filter-btn:hover {
-            color: var(--text);
-        }
-        .cat-filter-wrapper.active .cat-filter-btn:hover {
-            color: white;
-        }
-        .cat-edit-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 6px 8px;
-            cursor: pointer;
-            font-size: 11px;
-            border-left: 1px solid rgba(255, 255, 255, 0.06);
-            transition: color 0.2s;
-        }
-        .cat-edit-btn:hover {
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .cat-filter-wrapper.active .cat-edit-btn {
-            color: rgba(255, 255, 255, 0.8);
-            border-left-color: rgba(255, 255, 255, 0.2);
-        }
-        .cat-filter-wrapper.active .cat-edit-btn:hover {
-            color: white;
-            background: rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-add-category {
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10b981;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-add-category:hover {
-            background: rgba(16, 185, 129, 0.25);
-            border-color: #10b981;
-        }
-
-        #categoryModal .modal-card {
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .modal-controls-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        .modal-search-box {
-            position: relative;
-            flex: 1;
-        }
-        .modal-search-box i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-        .modal-search-box input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
-            padding: 8px 12px 8px 34px;
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 13px;
-            transition: border-color 0.2s;
-        }
-        .modal-search-box input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .materials-checklist {
-            max-height: 280px;
-            overflow-y: auto;
-            background: rgba(15, 15, 18, 0.6);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .materials-checklist::-webkit-scrollbar {
-            width: 6px;
-        }
-        .materials-checklist::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        .material-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text);
-            cursor: pointer;
-            padding: 8px 10px;
-            border-radius: 6px;
-            transition: background 0.15s;
-            user-select: none;
-            border: 1px solid transparent;
-        }
-        .material-checkbox-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: var(--card-border);
-        }
-        .material-checkbox-item.checked {
-            background: rgba(99, 102, 241, 0.06);
-            border-color: rgba(99, 102, 241, 0.2);
-        }
-        .material-checkbox-item input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border: 1px solid var(--card-border);
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.03);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            position: relative;
-            flex-shrink: 0;
-        }
-        .material-checkbox-item input[type="checkbox"]:checked {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        .material-checkbox-item input[type="checkbox"]:checked::after {
-            content: "\f00c";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 10px;
-            color: white;
-        }
-
-        .modal-actions-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .table-controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .search-box {
-            flex: 1;
-            min-width: 220px;
-            position: relative;
-        }
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        .search-box input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
-            padding: 9px 12px 9px 36px;
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 13px;
-            transition: border-color 0.2s;
-        }
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-    </style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧊</text></svg>">
 </head>
 <body>
     <div class="glow-bg"></div>
     <div class="app-container">
+
         <!-- Шапка -->
         <header class="header">
             <div class="header-content">
-                <div class="badge-tag"><i class="fa-solid fa-cloud"></i> Cloudflare Edition</div>
-                <h1>Проспектум — Дашборд проекта</h1>
-                <p class="subtitle">Локальная синхронизация данных через data.json</p>
+                <div class="badge-tag"><i class="fa-solid fa-cubes"></i> Schematic Edition</div>
+                <h1>NexusCraft</h1>
+                <p class="subtitle">
+                    Загрузите схему Minecraft — получите список блоков, 3D-предпросмотр и план заготовки ресурсов.
+                    Файлы не покидают ваш браузер.
+                </p>
             </div>
-            
+
             <div class="header-right">
-                <button class="btn-sync-header" onclick="loadProjectData(false)" title="Синхронизировать данные">
-                    <i class="fa-solid fa-rotate"></i> <span>Обновить</span>
+                <button class="btn-sync-header" id="exportBtn" title="Скачать проект в JSON">
+                    <i class="fa-solid fa-file-export"></i> <span>Экспорт</span>
                 </button>
+                <button class="btn-sync-header" id="importBtn" title="Загрузить проект из JSON">
+                    <i class="fa-solid fa-file-import"></i> <span>Импорт</span>
+                </button>
+                <input type="file" id="importInput" accept=".json,application/json" hidden>
+
                 <div class="auth-container" id="authContainer">
-                    <button class="btn-auth" id="loginBtn" onclick="openLoginModal()">
+                    <button class="btn-auth" id="loginBtn">
                         <i class="fa-brands fa-discord"></i> Войти
                     </button>
                     <div class="user-profile" id="userProfile" style="display: none;">
                         <img src="" alt="Avatar" id="userAvatar" class="user-avatar">
                         <span id="userName">Username</span>
-                        <button class="btn-logout" onclick="logout()" title="Выйти"><i class="fa-solid fa-right-from-bracket"></i></button>
+                        <button class="btn-logout" id="logoutBtn" title="Выйти"><i class="fa-solid fa-right-from-bracket"></i></button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Основной контент -->
-        <div class="dashboard-grid" style="grid-template-columns: 1fr;">
-            <div class="column-right">
-
-                <!-- Секция 1: Требуемые ресурсы -->
-                <div class="card collapsible-card" id="activeCard">
-                    <div class="card-header collapsible-header" onclick="toggleCard('activeCard')">
-                        <div class="card-title">
-                            <i class="fa-solid fa-boxes-stacked"></i>
-                            <h3>Требуемые ресурсы</h3>
-                            <span class="section-badge" id="activeCount">0</span>
-                        </div>
-                        <div class="header-actions">
-                            <div class="filter-buttons" onclick="event.stopPropagation()">
-                                <button class="filter-btn active" data-filter="all">Все</button>
-                                <button class="filter-btn" data-filter="not-started">Не начато</button>
-                                <button class="filter-btn" data-filter="in-progress">В процессе</button>
-                            </div>
-                            <i class="fa-solid fa-chevron-down collapse-icon"></i>
-                        </div>
+        <!-- Загрузка схем -->
+        <section class="upload-card" id="dropzone" tabindex="0" role="button" aria-label="Загрузить схему Minecraft">
+            <input type="file" id="fileInput" accept=".schem,.schematic,.litematic,.nbt" multiple hidden>
+            <div class="upload-inner">
+                <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="upload-text">
+                    <h2>Перетащите схему сюда</h2>
+                    <p>или <span class="link">выберите файлы</span> на устройстве</p>
+                    <div class="upload-formats">
+                        <span class="format-chip">.schem</span>
+                        <span class="format-chip">.litematic</span>
+                        <span class="format-chip">.nbt</span>
+                        <span class="format-chip">.schematic</span>
+                        <span class="format-note">можно несколько сразу</span>
                     </div>
+                </div>
+            </div>
+            <div class="upload-status" id="uploadStatus" hidden>
+                <div class="spinner"></div>
+                <span id="uploadStatusText">Обработка…</span>
+            </div>
+        </section>
 
-                    <div class="collapsible-content" style="padding-top: 15px;">
-                        
-                        <!-- Панель категорий и кнопка добавления -->
-                        <div class="category-toolbar">
-                            <div id="categoryFiltersWrapper" class="category-filters-container"></div>
-                            <button class="btn-add-category" onclick="openCategoryModal()">
-                                <i class="fa-solid fa-plus"></i> Новая категория
-                            </button>
-                        </div>
+        <div class="dashboard-grid">
+            <!-- 3D-предпросмотр -->
+            <section class="card preview-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-cube"></i>
+                        <h3>Предпросмотр</h3>
+                        <span class="section-badge" id="previewBadge">—</span>
+                    </div>
+                    <div class="header-actions">
+                        <label class="switch" title="Автоматическое вращение">
+                            <input type="checkbox" id="autoRotate">
+                            <span>Вращение</span>
+                        </label>
+                        <button class="icon-btn" id="resetViewBtn" title="Сбросить вид"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button class="icon-btn" id="screenshotBtn" title="Скачать PNG"><i class="fa-solid fa-camera"></i></button>
+                    </div>
+                </div>
 
-                        <div class="table-controls">
-                            <div class="search-box">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" id="searchInputActive" placeholder="Поиск материала..." oninput="filterTables()">
+                <div class="preview-stage" id="previewStage">
+                    <canvas id="previewCanvas"></canvas>
+                    <div class="preview-empty" id="previewEmpty">
+                        <i class="fa-solid fa-cubes-stacked"></i>
+                        <p>Здесь появится 3D-модель схемы</p>
+                        <span>Загрузите .schem, .litematic, .nbt или .schematic</span>
+                    </div>
+                    <div class="preview-hint" id="previewHint">ЛКМ — вращать · колесо — масштаб</div>
+                </div>
+
+                <div class="preview-toolbar">
+                    <label class="layer-control">
+                        <span>Слой Y</span>
+                        <input type="range" id="layerSlider" min="-1" max="0" value="-1" disabled>
+                        <b id="layerValue">все</b>
+                    </label>
+                    <span class="preview-meta" id="previewMeta">Нет данных</span>
+                </div>
+            </section>
+
+            <!-- Сводка и проекты -->
+            <section class="card stats-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <h3>Сводка проекта</h3>
+                    </div>
+                    <span class="table-counter" id="projectCount">0 схем</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span class="stat-value" id="statBlocks">0</span>
+                        <span class="stat-label">блоков</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="statUnique">0</span>
+                        <span class="stat-label">материалов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="statDimensions">—</span>
+                        <span class="stat-label">размер активной</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="statProgress">0%</span>
+                        <span class="stat-label">собрано</span>
+                    </div>
+                </div>
+
+                <div class="overall-progress" title="Общий прогресс по всем материалам">
+                    <div class="overall-fill" id="overallBar"></div>
+                </div>
+                <div class="progress-label">
+                    <span id="progressText">0 / 0 блоков собрано</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+
+                <div class="projects-head">
+                    <h4><i class="fa-solid fa-layer-group"></i> Загруженные схемы</h4>
+                    <button class="link-btn danger" id="clearProjectsBtn">Очистить</button>
+                </div>
+                <div class="project-list" id="projectList"></div>
+            </section>
+        </div>
+
+        <!-- Требуемые ресурсы -->
+        <div class="card collapsible-card" id="activeCard">
+            <div class="card-header collapsible-header" data-toggle="activeCard">
+                <div class="card-title">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <h3>Список материалов</h3>
+                    <span class="section-badge" id="activeCount">0</span>
+                </div>
+                <div class="header-actions" id="activeHeaderActions">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Все</button>
+                        <button class="filter-btn" data-filter="not-started">Не начато</button>
+                        <button class="filter-btn" data-filter="in-progress">В процессе</button>
+                    </div>
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+            </div>
+
+            <div class="collapsible-content">
+                <div class="category-toolbar">
+                    <div id="categoryFiltersWrapper" class="category-filters-container"></div>
+                    <button class="btn-add-category" id="addCategoryBtn">
+                        <i class="fa-solid fa-plus"></i> Новая категория
+                    </button>
+                </div>
+
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Поиск материала..." autocomplete="off">
+                    </div>
+                    <div class="custom-select" id="sortSelect">
+                        <div class="select-trigger" data-select="sortSelect">
+                            <div class="trigger-content">
+                                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                                <span id="sortLabel">По умолчанию</span>
                             </div>
-
-                            <div class="custom-select" id="customSelectActive">
-                                <div class="select-trigger" onclick="toggleSelectDropdown(event, 'customSelectActive')">
-                                    <div class="trigger-content">
-                                        <i class="fa-solid fa-arrow-down-wide-short"></i>
-                                        <span id="selectedOptionTextActive">Сортировка по умолчанию</span>
-                                    </div>
-                                    <i class="fa-solid fa-chevron-down arrow"></i>
-                                </div>
-                                <div class="select-dropdown">
-                                    <div class="select-option active" data-value="default" onclick="selectOption(this)">Сортировка по умолчанию</div>
-                                    <div class="select-option" data-value="rem-asc" onclick="selectOption(this)">Осталось: от меньшего к большему</div>
-                                    <div class="select-option" data-value="rem-desc" onclick="selectOption(this)">Осталось: от большего к меньшему</div>
-                                    <div class="select-option" data-value="req-desc" onclick="selectOption(this)">Требуется: сначала масштабные</div>
-                                </div>
-                            </div>
+                            <i class="fa-solid fa-chevron-down arrow"></i>
                         </div>
-
-                        <div class="table-container">
-                            <table id="activeTable">
-                                <thead>
-                                    <tr>
-                                        <th onclick="sortTable('activeTable', 0)" class="sortable">Материал <i class="fa-solid fa-sort"></i></th>
-                                        <th onclick="sortTable('activeTable', 1, true)" class="sortable">Требуется <i class="fa-solid fa-sort"></i></th>
-                                        <th onclick="sortTable('activeTable', 2, true)" class="sortable">Добыто <i class="fa-solid fa-sort"></i></th>
-                                        <th onclick="sortTable('activeTable', 3, true)" class="sortable">Осталось <i class="fa-solid fa-sort"></i></th>
-                                        <th>Прогресс</th>
-                                        <th>Статус</th>
-                                        <th>История смен</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="activeTableBody"></tbody>
-                            </table>
+                        <div class="select-dropdown">
+                            <div class="select-option active" data-value="default">По умолчанию</div>
+                            <div class="select-option" data-value="rem-asc">Осталось: от меньшего</div>
+                            <div class="select-option" data-value="rem-desc">Осталось: от большего</div>
+                            <div class="select-option" data-value="req-desc">Требуется: сначала много</div>
+                            <div class="select-option" data-value="name">Название: А → Я</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Секция 2: Собранные ресурсы -->
-                <div class="card collapsible-card collapsed" id="completedCard">
-                    <div class="card-header collapsible-header" onclick="toggleCard('completedCard')">
-                        <div class="card-title">
-                            <i class="fa-solid fa-circle-check" style="color: var(--success);"></i>
-                            <h3>Собранные ресурсы</h3>
-                            <span class="section-badge success" id="completedCount">0</span>
-                        </div>
-                        <div class="header-actions">
-                            <i class="fa-solid fa-chevron-down collapse-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="collapsible-content">
-                        <div class="table-container">
-                            <table id="completedTable">
-                                <thead>
-                                    <tr>
-                                        <th>Материал</th>
-                                        <th>Требуется</th>
-                                        <th>Добыто</th>
-                                        <th>Осталось</th>
-                                        <th>Прогресс</th>
-                                        <th>Статус</th>
-                                        <th>История смен</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="completedTableBody"></tbody>
-                            </table>
-                            <div class="empty-placeholder" id="completedEmpty">
-                                <i class="fa-solid fa-box-open"></i>
-                                <p>Пока нет полностью собранных ресурсов</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="hint-line">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Нажмите на число в колонке «Добыто», чтобы вписать количество. Понимает выражения:
+                    <code>32*64</code>, <code>2 шалкера</code>, <code>1 стак + 20</code>.
                 </div>
 
+                <div class="table-container">
+                    <table id="activeTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="name" class="sortable">Материал <i class="fa-solid fa-sort"></i></th>
+                                <th>Категория</th>
+                                <th data-sort="required" class="sortable">Требуется <i class="fa-solid fa-sort"></i></th>
+                                <th data-sort="obtained" class="sortable">Добыто <i class="fa-solid fa-sort"></i></th>
+                                <th data-sort="remaining" class="sortable">Осталось <i class="fa-solid fa-sort"></i></th>
+                                <th>Прогресс</th>
+                                <th>Статус</th>
+                                <th>История</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeTableBody"></tbody>
+                    </table>
+                    <div class="empty-placeholder" id="activeEmpty">
+                        <i class="fa-solid fa-box-open"></i>
+                        <p>Пока нет материалов — загрузите схему выше</p>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Собранные ресурсы -->
+        <div class="card collapsible-card collapsed" id="completedCard">
+            <div class="card-header collapsible-header" data-toggle="completedCard">
+                <div class="card-title">
+                    <i class="fa-solid fa-circle-check" style="color: var(--success);"></i>
+                    <h3>Собранные ресурсы</h3>
+                    <span class="section-badge success" id="completedCount">0</span>
+                </div>
+                <div class="header-actions">
+                    <i class="fa-solid fa-chevron-down collapse-icon"></i>
+                </div>
+            </div>
+
+            <div class="collapsible-content">
+                <div class="table-container">
+                    <table id="completedTable">
+                        <thead>
+                            <tr>
+                                <th>Материал</th>
+                                <th>Категория</th>
+                                <th>Требуется</th>
+                                <th>Добыто</th>
+                                <th>Осталось</th>
+                                <th>Прогресс</th>
+                                <th>Статус</th>
+                                <th>История</th>
+                            </tr>
+                        </thead>
+                        <tbody id="completedTableBody"></tbody>
+                    </table>
+                    <div class="empty-placeholder" id="completedEmpty">
+                        <i class="fa-solid fa-box-open"></i>
+                        <p>Пока нет полностью собранных ресурсов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <span><i class="fa-solid fa-shield-halved"></i> Все схемы обрабатываются локально в браузере</span>
+            <span>NexusCraft · <a href="https://github.com/BestDay333/NexusCraft" target="_blank" rel="noopener">GitHub</a></span>
+        </footer>
     </div>
 
     <!-- Модальное окно редактирования добычи -->
@@ -581,15 +282,16 @@
         <div class="modal-card">
             <div class="modal-header">
                 <h3 id="modalItemTitle">Изменение добычи</h3>
-                <button class="close-modal" onclick="closeEditModal()"><i class="fa-solid fa-xmark"></i></button>
+                <button class="close-modal" data-close="editModal"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-info-block">
                 <div>Требуется: <span id="modalRequiredText">0</span></div>
                 <div>Осталось: <span id="modalRemainingText">0</span></div>
+                <div>Материал: <span id="modalIdText">—</span></div>
             </div>
             <div class="modal-body">
-                <input type="text" id="modalValueInput" placeholder="Например: 2 шалкера или 32*64..." oninput="calcModalRemaining()" onkeydown="if(event.key==='Enter') saveObtainedLocally()">
-                <button class="btn primary full" onclick="saveObtainedLocally()" style="margin-top: 12px;">Сохранить</button>
+                <input type="text" id="modalValueInput" placeholder="Например: 32*64, 2 шалкера, 1 стак + 20" autocomplete="off">
+                <button class="btn primary full" id="saveObtainedBtn">Сохранить</button>
             </div>
         </div>
     </div>
@@ -599,24 +301,19 @@
         <div class="modal-card">
             <div class="modal-header">
                 <h3 id="categoryModalTitle">Новая категория</h3>
-                <button class="close-modal" onclick="closeCategoryModal()"><i class="fa-solid fa-xmark"></i></button>
+                <button class="close-modal" data-close="categoryModal"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="modal-subtitle" id="categoryModalSubtitle">Введите название и выберите материалы для добавления</p>
+            <p class="modal-subtitle" id="categoryModalSubtitle">Введите название и выберите материалы</p>
             <div class="modal-body">
-                <input type="text" id="newCategoryInput" placeholder="Название категории..." style="margin-bottom: 12px;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <label style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Состав материалов:</label>
-                </div>
+                <input type="text" id="newCategoryInput" placeholder="Название категории..." autocomplete="off">
 
                 <div class="modal-controls-row">
                     <div class="modal-search-box">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="modalMaterialSearch" placeholder="Поиск по материалам..." oninput="renderMaterialsChecklist()">
+                        <input type="text" id="modalMaterialSearch" placeholder="Поиск по материалам..." autocomplete="off">
                     </div>
-                    
-                    <div class="custom-select" id="customSelectModal" style="width: 190px;">
-                        <div class="select-trigger" onclick="toggleSelectDropdown(event, 'customSelectModal')">
+                    <div class="custom-select" id="customSelectModal">
+                        <div class="select-trigger" data-select="customSelectModal">
                             <div class="trigger-content">
                                 <i class="fa-solid fa-arrow-down-wide-short"></i>
                                 <span id="selectedOptionTextModal">По алфавиту</span>
@@ -624,8 +321,8 @@
                             <i class="fa-solid fa-chevron-down arrow"></i>
                         </div>
                         <div class="select-dropdown">
-                            <div class="select-option active" data-value="alpha" onclick="selectModalSortOption(this)">По алфавиту</div>
-                            <div class="select-option" data-value="checked-first" onclick="selectModalSortOption(this)">Сначала выбранные</div>
+                            <div class="select-option active" data-value="alpha">По алфавиту</div>
+                            <div class="select-option" data-value="checked-first">Сначала выбранные</div>
                         </div>
                     </div>
                 </div>
@@ -633,8 +330,8 @@
                 <div class="materials-checklist" id="materialsChecklist"></div>
 
                 <div class="modal-actions-row">
-                    <button class="btn primary" id="categorySubmitBtn" onclick="saveCategory()" style="flex: 1;">Создать категорию</button>
-                    <button class="btn" id="categoryDeleteBtn" onclick="deleteCurrentCategory()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; display: none;"><i class="fa-solid fa-trash"></i> Удалить</button>
+                    <button class="btn primary" id="categorySubmitBtn">Создать категорию</button>
+                    <button class="btn danger" id="categoryDeleteBtn"><i class="fa-solid fa-trash"></i> Удалить</button>
                 </div>
             </div>
         </div>
@@ -645,688 +342,19 @@
         <div class="modal-card">
             <div class="modal-header">
                 <h3>Авторизация</h3>
-                <button class="close-modal" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+                <button class="close-modal" data-close="loginModal"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="modal-subtitle">Введите ваш ник для доступа к изменениям</p>
+            <p class="modal-subtitle">Имя нужно для отметки изменений в истории материалов</p>
             <div class="modal-body">
-                <input type="text" id="usernameInput" placeholder="Ваш ник..." onkeydown="if(event.key==='Enter') login()">
-                <button class="btn primary full" onclick="login()" style="margin-top: 12px;">Войти в систему</button>
+                <input type="text" id="usernameInput" placeholder="Ваш ник..." autocomplete="nickname">
+                <button class="btn primary full" id="loginSubmitBtn">Войти</button>
             </div>
         </div>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
 
-    <script>
-        const DATA_URL = "./data.json"; // Загрузка данных локально с хостинга Cloudflare
-
-        let materialsData = [];
-        let savedObtained = JSON.parse(localStorage.getItem('dashboard_obtained')) || {};
-        let itemHistory = JSON.parse(localStorage.getItem('dashboard_history')) || {};
-
-        let categories = JSON.parse(localStorage.getItem('project_categories')) || [
-            { id: 'wool', name: 'Шерсть и ковры' },
-            { id: 'clay', name: 'Керамика и терракота' },
-            { id: 'wood', name: 'Дерево' },
-            { id: 'stone', name: 'Камень и блоки' },
-            { id: 'other', name: 'Прочее' }
-        ];
-
-        function saveCategories() {
-            localStorage.setItem('project_categories', JSON.stringify(categories));
-        }
-
-        function getMaterialCategoriesMap() {
-            return JSON.parse(localStorage.getItem('material_categories_map')) || {};
-        }
-
-        function saveMaterialCategoryMap(map) {
-            localStorage.setItem('material_categories_map', JSON.stringify(map));
-        }
-
-        function autoAssignCategories(items) {
-            let materialMap = getMaterialCategoriesMap();
-            let updated = false;
-
-            items.forEach(item => {
-                if (!materialMap[item.name]) {
-                    const name = item.name.toLowerCase();
-                    let assignedId = 'other';
-
-                    if (name.includes('шерсть') || name.includes('ковёр') || name.includes('ковер')) {
-                        assignedId = 'wool';
-                    } else if (name.includes('керамик') || name.includes('терракот')) {
-                        assignedId = 'clay';
-                    } else if (name.includes('древ') || name.includes('дуб') || name.includes('брус') || name.includes('бревно') || name.includes('доск') || name.includes('ель') || name.includes('берез') || name.includes('тропич') || name.includes('акац') || name.includes('мангр') || name.includes('багрян') || name.includes('вишн') || name.includes('бамбук') || name.includes('крим') || name.includes('дерев')) {
-                        assignedId = 'wood';
-                    } else if (name.includes('камен') || name.includes('кирпич') || name.includes('блок') || name.includes('бетон') || name.includes('песчаник') || name.includes('кварц') || name.includes('сланец') || name.includes('диорит') || name.includes('гранит') || name.includes('андезит') || name.includes('туф')) {
-                        assignedId = 'stone';
-                    }
-
-                    materialMap[item.name] = assignedId;
-                    updated = true;
-                }
-            });
-
-            if (updated) {
-                saveMaterialCategoryMap(materialMap);
-            }
-        }
-
-        function initCategoriesUI() {
-            renderCategoryFilterButtons();
-        }
-
-        function renderCategoryFilterButtons() {
-            const wrapper = document.getElementById('categoryFiltersWrapper');
-            if (!wrapper) return;
-
-            wrapper.innerHTML = '';
-
-            const allWrapper = document.createElement('div');
-            allWrapper.className = `cat-filter-wrapper ${currentCatFilter === 'all' ? 'active' : ''}`;
-            allWrapper.innerHTML = `<button class="cat-filter-btn" onclick="filterTableByCategory('all')">Все</button>`;
-            wrapper.appendChild(allWrapper);
-
-            categories.forEach(cat => {
-                const isSelected = currentCatFilter === cat.id;
-                const catWrapper = document.createElement('div');
-                catWrapper.className = `cat-filter-wrapper ${isSelected ? 'active' : ''}`;
-                catWrapper.innerHTML = `
-                    <button class="cat-filter-btn" onclick="filterTableByCategory('${cat.id}')">${cat.name}</button>
-                    <button class="cat-edit-btn" onclick="openEditCategoryModal('${cat.id}')" title="Редактировать категорию"><i class="fa-solid fa-pen"></i></button>
-                `;
-                wrapper.appendChild(catWrapper);
-            });
-        }
-
-        let editingCategoryId = null;
-        let modalSortMode = 'alpha';
-
-        function openCategoryModal() {
-            editingCategoryId = null;
-            modalSortMode = 'alpha';
-            document.getElementById('selectedOptionTextModal').textContent = 'По алфавиту';
-            document.getElementById('categoryModalTitle').textContent = 'Новая категория';
-            document.getElementById('categoryModalSubtitle').textContent = 'Введите название и выберите материалы для добавления';
-            document.getElementById('categorySubmitBtn').textContent = 'Создать категорию';
-            document.getElementById('categoryDeleteBtn').style.display = 'none';
-            document.getElementById('newCategoryInput').value = '';
-            document.getElementById('modalMaterialSearch').value = '';
-
-            renderMaterialsChecklist();
-            document.getElementById('categoryModal').classList.add('open');
-            document.getElementById('newCategoryInput').focus();
-        }
-
-        function openEditCategoryModal(catId) {
-            const cat = categories.find(c => c.id === catId);
-            if (!cat) return;
-
-            editingCategoryId = catId;
-            modalSortMode = 'checked-first';
-            document.getElementById('selectedOptionTextModal').textContent = 'Сначала выбранные';
-            document.getElementById('categoryModalTitle').textContent = 'Редактировать категорию';
-            document.getElementById('categoryModalSubtitle').textContent = 'Измените название или состав материалов';
-            document.getElementById('categorySubmitBtn').textContent = 'Сохранить';
-            document.getElementById('categoryDeleteBtn').style.display = 'inline-flex';
-            document.getElementById('newCategoryInput').value = cat.name;
-            document.getElementById('modalMaterialSearch').value = '';
-
-            renderMaterialsChecklist();
-            document.getElementById('categoryModal').classList.add('open');
-            document.getElementById('newCategoryInput').focus();
-        }
-
-        function selectModalSortOption(optionEl) {
-            modalSortMode = optionEl.getAttribute('data-value');
-            document.getElementById('selectedOptionTextModal').textContent = optionEl.textContent;
-            document.querySelectorAll('#customSelectModal .select-option').forEach(opt => opt.classList.remove('active'));
-            optionEl.classList.add('active');
-            document.getElementById('customSelectModal').classList.remove('open');
-            renderMaterialsChecklist();
-        }
-
-        function renderMaterialsChecklist() {
-            const checklistContainer = document.getElementById('materialsChecklist');
-            const query = document.getElementById('modalMaterialSearch').value.toLowerCase().trim();
-            const materialMap = getMaterialCategoriesMap();
-
-            let items = [...materialsData];
-
-            if (query) {
-                items = items.filter(item => item.name.toLowerCase().includes(query));
-            }
-
-            items.sort((a, b) => {
-                const isAChecked = editingCategoryId ? (materialMap[a.name] === editingCategoryId) : false;
-                const isBChecked = editingCategoryId ? (materialMap[b.name] === editingCategoryId) : false;
-
-                if (modalSortMode === 'checked-first') {
-                    if (isAChecked && !isBChecked) return -1;
-                    if (!isAChecked && isBChecked) return 1;
-                }
-                return a.name.localeCompare(b.name);
-            });
-
-            checklistContainer.innerHTML = '';
-
-            if (items.length === 0) {
-                checklistContainer.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;">Ничего не найдено</div>`;
-                return;
-            }
-
-            items.forEach(item => {
-                const isChecked = editingCategoryId ? (materialMap[item.name] === editingCategoryId) : false;
-                const label = document.createElement('label');
-                label.className = `material-checkbox-item ${isChecked ? 'checked' : ''}`;
-                
-                label.innerHTML = `
-                    <input type="checkbox" value="${item.name}" ${isChecked ? 'checked' : ''} onchange="toggleItemCheckboxStyle(this)"> 
-                    <span>${item.name}</span>
-                `;
-                checklistContainer.appendChild(label);
-            });
-        }
-
-        function toggleItemCheckboxStyle(checkbox) {
-            const label = checkbox.closest('.material-checkbox-item');
-            if (checkbox.checked) {
-                label.classList.add('checked');
-            } else {
-                label.classList.remove('checked');
-            }
-        }
-
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').classList.remove('open');
-            editingCategoryId = null;
-        }
-
-        function saveCategory() {
-            const input = document.getElementById('newCategoryInput');
-            const catName = input.value.trim();
-            if (!catName) {
-                showToast('Введите название категории!', 'error');
-                return;
-            }
-
-            let materialMap = getMaterialCategoriesMap();
-            const checkedBoxes = document.querySelectorAll('#materialsChecklist input[type="checkbox"]:checked');
-
-            if (editingCategoryId) {
-                const cat = categories.find(c => c.id === editingCategoryId);
-                if (cat) {
-                    cat.name = catName;
-                }
-
-                Object.keys(materialMap).forEach(matName => {
-                    if (materialMap[matName] === editingCategoryId) {
-                        materialMap[matName] = 'other';
-                    }
-                });
-
-                checkedBoxes.forEach(chk => {
-                    materialMap[chk.value] = editingCategoryId;
-                });
-
-                showToast('Категория успешно обновлена!');
-            } else {
-                const catId = 'cat_' + Date.now();
-                categories.push({ id: catId, name: catName });
-
-                checkedBoxes.forEach(chk => {
-                    materialMap[chk.value] = catId;
-                });
-
-                showToast('Категория успешно создана!');
-            }
-
-            saveCategories();
-            saveMaterialCategoryMap(materialMap);
-            closeCategoryModal();
-            initCategoriesUI();
-            renderTables();
-        }
-
-        function deleteCurrentCategory() {
-            if (!editingCategoryId) return;
-            const cat = categories.find(c => c.id === editingCategoryId);
-            if (!cat) return;
-
-            let materialMap = getMaterialCategoriesMap();
-            Object.keys(materialMap).forEach(matName => {
-                if (materialMap[matName] === editingCategoryId) {
-                    materialMap[matName] = 'other';
-                }
-            });
-            saveMaterialCategoryMap(materialMap);
-
-            categories = categories.filter(c => c.id !== editingCategoryId);
-            saveCategories();
-
-            if (currentCatFilter === editingCategoryId) {
-                currentCatFilter = 'all';
-            }
-
-            closeCategoryModal();
-            initCategoriesUI();
-            renderTables();
-            showToast('Категория удалена');
-        }
-
-        let currentCatFilter = 'all';
-        function filterTableByCategory(catId) {
-            currentCatFilter = catId;
-            renderCategoryFilterButtons();
-            filterTables();
-        }
-
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(20px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
-
-        function parseObtainedValue(input) {
-            if (typeof input === 'number') return input;
-            if (!input) return 0;
-            let s = String(input).toLowerCase().trim();
-            let total = 0;
-
-            const shulkerRegex = /(\d+(?:[\.,]\d+)?)\s*(?:шалкер[а-я]*|shulker[s]*)/g;
-            let match;
-            while ((match = shulkerRegex.exec(s)) !== null) {
-                total += parseFloat(match[1].replace(',', '.')) * 1728;
-            }
-            s = s.replace(/[\d\.,]+\s*(?:шалкер[а-я]*|shulker[s]*)/g, '');
-
-            const stackRegex = /(\d+(?:[\.,]\d+)?)\s*(?:стак[а-я]*)/g;
-            while ((match = stackRegex.exec(s)) !== null) {
-                total += parseFloat(match[1].replace(',', '.')) * 64;
-            }
-            s = s.replace(/[\d\.,]+\s*(?:стак[а-я]*)/g, '');
-
-            let cleanExpr = s
-                .replace(/предмет[а-я]*/g, '')
-                .replace(/шт\.?/g, '')
-                .replace(/штук[а-я]*/g, '')
-                .replace(',', '.')
-                .replace(/[^0-9+\-*/().\s]/g, '');
-
-            try {
-                if (cleanExpr.trim()) {
-                    const res = Function(`'use strict'; return (${cleanExpr})`)();
-                    if (!isNaN(res)) total += res;
-                }
-            } catch (e) {
-                const nums = cleanExpr.match(/\d+(?:\.\d+)?/g);
-                if (nums) nums.forEach(n => total += parseFloat(n));
-            }
-            return Math.round(total);
-        }
-
-        function checkAuth() {
-            const savedUser = localStorage.getItem('dashboard_user');
-            if (savedUser) showUser(savedUser);
-        }
-
-        function openLoginModal() {
-            document.getElementById('loginModal').classList.add('open');
-            document.getElementById('usernameInput').focus();
-        }
-
-        function closeLoginModal() {
-            document.getElementById('loginModal').classList.remove('open');
-        }
-
-        function login() {
-            const input = document.getElementById('usernameInput');
-            const username = input.value.trim();
-            if (!username) return;
-            localStorage.setItem('dashboard_user', username);
-            showUser(username);
-            closeLoginModal();
-            input.value = '';
-            showToast(`Добро пожаловать, ${username}!`);
-        }
-
-        function logout() {
-            localStorage.removeItem('dashboard_user');
-            document.getElementById('userProfile').style.display = 'none';
-            document.getElementById('loginBtn').style.display = 'inline-flex';
-            showToast('Вы вышли из системы');
-        }
-
-        function showUser(username) {
-            document.getElementById('loginBtn').style.display = 'none';
-            const profile = document.getElementById('userProfile');
-            profile.style.display = 'flex';
-            document.getElementById('userName').textContent = username;
-            document.getElementById('userAvatar').src = `https://api.dicebear.com/7.x/identicon/svg?seed=${username}`;
-        }
-
-        async function loadProjectData(isBackground = false) {
-            try {
-                const response = await fetch(DATA_URL + '?t=' + Date.now());
-                if (!response.ok) throw new Error('Не удалось загрузить data.json');
-                const data = await response.json();
-                
-                materialsData = data.map(item => ({
-                    name: item.name,
-                    required: item.required || 0,
-                    obtained: item.obtained || 0
-                }));
-
-                autoAssignCategories(materialsData);
-                localStorage.setItem('dashboard_cached_materials', JSON.stringify(materialsData));
-                renderTables();
-                
-                if (!isBackground) {
-                    showToast('Данные успешно обновлены!');
-                }
-            } catch (err) {
-                if (!isBackground) {
-                    showToast('Не удалось загрузить data.json', 'error');
-                }
-                console.error(err);
-            }
-        }
-
-        function renderTables() {
-            const activeTbody = document.getElementById('activeTableBody');
-            const completedTbody = document.getElementById('completedTableBody');
-            activeTbody.innerHTML = '';
-            completedTbody.innerHTML = '';
-
-            const materialMap = getMaterialCategoriesMap();
-
-            materialsData.forEach((item, index) => {
-                const itemName = item.name;
-                const required = item.required || 0;
-                
-                let rawObd = savedObtained[itemName] !== undefined ? savedObtained[itemName] : item.obtained;
-                let obtained = parseObtainedValue(rawObd);
-
-                item.obtained = obtained;
-
-                const remaining = Math.max(0, required - obtained);
-                const percent = required > 0 ? Math.min(100, (obtained / required) * 100) : 0;
-                
-                let status = 'not-started';
-                let statusText = 'Не начато';
-                if (percent === 100) {
-                    status = 'closed';
-                    statusText = 'Закрыто';
-                } else if (percent > 0) {
-                    status = 'in-progress';
-                    statusText = 'В процессе';
-                }
-
-                const currentCat = materialMap[itemName] || 'other';
-                const historyInfo = itemHistory[itemName] || { user: 'System', text: 'Синхронизация' };
-
-                const tr = document.createElement('tr');
-                tr.setAttribute('data-status', status);
-                tr.setAttribute('data-category', currentCat);
-                tr.setAttribute('data-id', index);
-                tr.setAttribute('data-name', itemName);
-
-                tr.innerHTML = `
-                    <td>
-                        <div class="item-cell">
-                            <span>${itemName}</span>
-                        </div>
-                    </td>
-                    <td class="req-val" data-value="${required}">${required.toLocaleString()}</td>
-                    <td>
-                        <button class="btn-edit-val" onclick="openEditModal(this)">
-                            <span class="obtained-text" data-raw="${rawObd}">${obtained.toLocaleString()}</span>
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                    </td>
-                    <td class="highlight-rem" data-value="${remaining}">${remaining.toLocaleString()}</td>
-                    <td>
-                        <div class="mini-prog">
-                            <div class="bar ${percent === 100 ? 'complete' : ''}" style="width: ${percent}%;"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="status-badge ${status}">${statusText}</span>
-                    </td>
-                    <td>
-                        <div class="history-cell">
-                            <span class="history-text ${historyInfo.user === 'System' ? 'muted' : ''}">${historyInfo.user}: ${historyInfo.text}</span>
-                        </div>
-                    </td>
-                `;
-
-                if (status === 'closed') {
-                    completedTbody.appendChild(tr);
-                } else {
-                    activeTbody.appendChild(tr);
-                }
-            });
-
-            updateCounters();
-            checkEmptyStates();
-            filterTables();
-        }
-
-        function toggleCard(cardId) {
-            document.getElementById(cardId).classList.toggle('collapsed');
-        }
-
-        let activeRow = null;
-
-        function openEditModal(buttonEl) {
-            const currentUser = localStorage.getItem('dashboard_user');
-            if (!currentUser) {
-                showToast('Войдите в систему, чтобы изменять ресурсы!', 'error');
-                openLoginModal();
-                return;
-            }
-
-            activeRow = buttonEl.closest('tr');
-            const itemName = activeRow.getAttribute('data-name');
-            const requiredVal = activeRow.querySelector('.req-val').getAttribute('data-value');
-            const rawObd = activeRow.querySelector('.obtained-text').getAttribute('data-raw');
-
-            document.getElementById('modalItemTitle').textContent = itemName;
-            document.getElementById('modalRequiredText').textContent = Number(requiredVal).toLocaleString();
-            
-            const input = document.getElementById('modalValueInput');
-            input.value = rawObd !== undefined && rawObd !== null ? rawObd : '';
-            calcModalRemaining();
-
-            document.getElementById('editModal').classList.add('open');
-            input.focus();
-            input.select();
-        }
-
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('open');
-            activeRow = null;
-        }
-
-        function calcModalRemaining() {
-            if (!activeRow) return;
-            const required = parseFloat(activeRow.querySelector('.req-val').getAttribute('data-value')) || 0;
-            const input = document.getElementById('modalValueInput');
-            let obtained = parseObtainedValue(input.value);
-
-            if (obtained < 0) obtained = 0;
-            if (obtained > required) obtained = required;
-
-            const remaining = required - obtained;
-            document.getElementById('modalRemainingText').textContent = remaining.toLocaleString();
-        }
-
-        function saveObtainedLocally() {
-            if (!activeRow) return;
-            const currentUser = localStorage.getItem('dashboard_user');
-            const itemName = activeRow.getAttribute('data-name');
-
-            const input = document.getElementById('modalValueInput');
-            const rawVal = input.value;
-            const required = parseFloat(activeRow.querySelector('.req-val').getAttribute('data-value')) || 0;
-            let obtained = parseObtainedValue(rawVal);
-
-            if (obtained < 0) obtained = 0;
-            if (obtained > required) obtained = required;
-
-            savedObtained[itemName] = obtained;
-            localStorage.setItem('dashboard_obtained', JSON.stringify(savedObtained));
-
-            const historyTextStr = `${rawVal} шт.`;
-            itemHistory[itemName] = { user: currentUser, text: historyTextStr };
-            localStorage.setItem('dashboard_history', JSON.stringify(itemHistory));
-
-            closeEditModal();
-            renderTables();
-            showToast('Значение сохранено!');
-        }
-
-        document.getElementById('editModal').addEventListener('click', (e) => {
-            if (e.target.id === 'editModal') closeEditModal();
-        });
-        document.getElementById('categoryModal').addEventListener('click', (e) => {
-            if (e.target.id === 'categoryModal') closeCategoryModal();
-        });
-        document.getElementById('loginModal').addEventListener('click', (e) => {
-            if (e.target.id === 'loginModal') closeLoginModal();
-        });
-
-        function toggleSelectDropdown(e, selectId) {
-            e.stopPropagation();
-            document.getElementById(selectId).classList.toggle('open');
-        }
-
-        window.addEventListener('click', () => {
-            document.querySelectorAll('.custom-select').forEach(sel => sel.classList.remove('open'));
-        });
-
-        function selectOption(optionEl) {
-            const value = optionEl.getAttribute('data-value');
-            const text = optionEl.textContent;
-            document.getElementById('selectedOptionTextActive').textContent = text;
-            
-            document.querySelectorAll('#customSelectActive .select-option').forEach(opt => opt.classList.remove('active'));
-            optionEl.classList.add('active');
-            document.getElementById('customSelectActive').classList.remove('open');
-            
-            applyAdvancedSort('activeTable', value);
-        }
-
-        function applyAdvancedSort(tableId, val) {
-            const tbody = document.getElementById(tableId + 'Body');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            rows.sort((a, b) => {
-                if (val === 'rem-asc') {
-                    return parseFloat(a.children[3].getAttribute('data-value')) - parseFloat(b.children[3].getAttribute('data-value'));
-                } else if (val === 'rem-desc') {
-                    return parseFloat(b.children[3].getAttribute('data-value')) - parseFloat(a.children[3].getAttribute('data-value'));
-                } else if (val === 'req-desc') {
-                    return parseFloat(b.children[1].getAttribute('data-value')) - parseFloat(a.children[1].getAttribute('data-value'));
-                }
-                return 0;
-            });
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        let sortDirections = {};
-        function sortTable(tableId, columnIndex, isNumeric = false) {
-            const tbody = document.getElementById(tableId + 'Body');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            let key = tableId + '-' + columnIndex;
-            let dir = sortDirections[key] === 'asc' ? 'desc' : 'asc';
-            sortDirections[key] = dir;
-
-            rows.sort((rowA, rowB) => {
-                let cellA = rowA.children[columnIndex].getAttribute('data-value') || rowA.children[columnIndex].textContent.trim();
-                let cellB = rowB.children[columnIndex].getAttribute('data-value') || rowB.children[columnIndex].textContent.trim();
-
-                if (isNumeric) {
-                    return dir === 'asc' ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
-                } else {
-                    return dir === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-                }
-            });
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        const filterBtns = document.querySelectorAll('.filter-buttons .filter-btn');
-        let currentStatusFilter = 'all';
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentStatusFilter = btn.getAttribute('data-filter');
-                filterTables();
-            });
-        });
-
-        function filterTables() {
-            const query = document.getElementById('searchInputActive').value.toLowerCase();
-            const rows = document.querySelectorAll('#activeTableBody tr');
-
-            rows.rows = rows || [];
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                const status = row.getAttribute('data-status');
-                const category = row.getAttribute('data-category');
-
-                const matchesSearch = text.includes(query);
-                const matchesStatus = (currentStatusFilter === 'all') || (status === currentStatusFilter);
-                const matchesCategory = (currentCatFilter === 'all') || (category === currentCatFilter);
-
-                if (matchesSearch && matchesStatus && matchesCategory) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        function updateCounters() {
-            const activeCount = document.querySelectorAll('#activeTableBody tr').length;
-            const completedCount = document.querySelectorAll('#completedTableBody tr').length;
-            document.getElementById('activeCount').textContent = activeCount;
-            document.getElementById('completedCount').textContent = completedCount;
-        }
-
-        function checkEmptyStates() {
-            const completedRows = document.querySelectorAll('#completedTableBody tr').length;
-            const emptyEl = document.getElementById('completedEmpty');
-            const tableEl = document.getElementById('completedTable');
-            
-            if (completedRows === 0) {
-                emptyEl.style.display = 'block';
-                tableEl.style.display = 'none';
-            } else {
-                emptyEl.style.display = 'none';
-                tableEl.style.display = 'table';
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            initCategoriesUI();
-            checkAuth();
-            loadProjectData(false);
-
-            setInterval(() => {
-                loadProjectData(true);
-            }, 30000);
-        });
-    </script>
+    <script src="vendor/pako.min.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
